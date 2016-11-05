@@ -1,0 +1,31 @@
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\TrabalhoInterdisciplinar\Parte2\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\Trabalho Interdisciplinar.exe.config
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\TrabalhoInterdisciplinar\Parte2\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.csprojResolveAssemblyReference.cache
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\TrabalhoInterdisciplinar\Parte2\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz.View.Cliente.frmCadastrar_Consumidor.resources
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\TrabalhoInterdisciplinar\Parte2\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Properties.Resources.resources
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\TrabalhoInterdisciplinar\Parte2\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.csproj.GenerateResource.Cache
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\Trabalho Interdisciplinar.exe.config
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.csprojResolveAssemblyReference.cache
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Form1.resources
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Properties.Resources.resources
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.csproj.GenerateResource.Cache
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz.MVC_View.Cliente.frmCadastrar_Consumidor.resources
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz.MVC_View.Cliente.frmPesquisarConsumidor.resources
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz.MVC_View.Conta.frmCadastrarConta.resources
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz.MVC_View.Conta.frmPesquisarConta.resources
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\Trabalho Interdisciplinar.exe
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\Trabalho Interdisciplinar.pdb
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.exe
+D:\Luiz Fernando\Puc Minas\2°Periodo\POO\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.pdb
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\Trabalho Interdisciplinar.exe.config
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\Trabalho Interdisciplinar.exe
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\Trabalho Interdisciplinar.pdb
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Form1.resources
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Properties.Resources.resources
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.csproj.GenerateResource.Cache
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.exe
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.pdb
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Cliente.frmCadastrar_Consumidor.resources
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Cliente.frmPesquisarConsumidor.resources
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Conta.frmCadastrarConta.resources
+C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Conta.frmPesquisarConta.resources
