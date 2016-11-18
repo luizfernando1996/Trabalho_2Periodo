@@ -7,7 +7,7 @@ using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Contro
 
 namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Contas
 {
-     class BaseConta//retirei o public
+    class BaseConta//retirei o public
     {
         //atributos
         public ITarifa trf;

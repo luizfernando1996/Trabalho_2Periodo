@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Consumidor;
-using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.XML.Consumidor;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Banco_de_Dados;
 //foi alterado o parametro CharacterCasing para Upper
 //se digitar r6 e apagar o 6 ai vou ter que apertar 2x o botao cadastrar
 
@@ -27,14 +28,13 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         int flagNome = 1;
 
         //caminho do arquivo
-        private string strPathFile = @"C:/Users/Admin/Desktop/Trabalho Interdisciplinar/Trabalho Interdisciplinar/Contagem/Leonardo_Pedro_Luiz_Fabricio/MVC_Model/Arquivos/Consumidores.txt";
+        private string strPathFile = @"C:/Users/Admin/Desktop/Trabalho Interdisciplinar/Trabalho Interdisciplinar/Contagem/Leonardo_Pedro_Luiz_Fabricio/MVC_Model/Arquivo/Bloco_de_Notas/Consumidores.txt";
 
-        private ClienteDAO clnt;
+
         //inicializador do form
         public frmCadastrar_Consumidor()
         {
             InitializeComponent();
-            clnt = new ClienteDAO();
         }
 
         //------------------eventos
@@ -81,6 +81,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
             cadastrarArqTxt();
+
         }
         //textbox
         private void txtNome_KeyPress(object sender, KeyPressEventArgs e)
@@ -132,21 +133,14 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             //flagcodigo=2-->O cnpj não foi digitado
 
             if (flagNome == 0 && flagcodigo == 0)//escreve no arquivo se as duas flags forem 0
-                escrArq(nome, pessoa, codigo);
-
+            {
+                escrArqBlocoNotas(nome, pessoa, codigo);
+                escreverArqXml(pessoa,nome, codigo);
+                escreverArqBanco();
+                Limpar();
+            }
             mensagemErro(flagNome, flagcodigo);//imprime uma mensagem se alguma flag não conter 0
 
-            if (flagNome == 0 && flagcodigo == 0)
-            {
-                Limpar();
-                escreverArqXml(nome, codigo);
-            }
-        }
-        private void escreverArqXml(string nome, string codigo)
-        {
-            Pessoa_Fisica pf = new Pessoa_Fisica(nome,codigo);
-            clnt.adicionar_MtdClienteDAO(pf);
-            clnt.salvar_MtdClienteDAO();
         }
         private int verfNome(ref string nome)
         {
@@ -217,7 +211,9 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
             return flagcodigo;
         }
-        private void escrArq(string nome, string pessoa, string codigo)
+
+        //  <MODEL>
+        private void escrArqBlocoNotas(string nome, string pessoa, string codigo)
         {
             using (StreamWriter sw = File.AppendText(strPathFile))
             {
@@ -228,6 +224,49 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
                 MessageBox.Show("Cadastro efetuado com sucesso");
             }
         }
+        private void escreverArqXml(string pessoa,string nome, string codigo)
+        {
+            if (pessoa.StartsWith("Pessoa Física"))
+            {
+                PessoaFisicaDAO clntPF = new PessoaFisicaDAO();
+                Pessoa_Fisica pf = new Pessoa_Fisica()
+                {
+                    nome_MtdPessoaF = nome,
+                    cpf_MtdPessoaF = codigo
+                };
+                clntPF.adicionar_MtdPessoaFisicaDAO(pf);
+                // clnt.carregar_MtdClienteDAO();
+                clntPF.salvar_MtdPessoaFisicaDAO();
+            }
+            else
+            {
+                PessoaJuridicaDAO clntPJ = new PessoaJuridicaDAO();
+                Pessoa_Juridica pj = new Pessoa_Juridica()
+                {
+                    nome_MtdPessoaJ = nome,
+                    cnpj_MtdPessoaJ = codigo
+                };
+                clntPJ.adicionar_MtdPessoaFisicaDAO(pj);
+                // clnt.carregar_MtdClienteDAO();
+                clntPJ.salvar_MtdPessoaFisicaDAO();
+            }
+            
+        }
+        private void escreverArqBanco()
+        {
+            DAL dao = new DAL();
+            try
+            {
+                dao.Conectar();
+                dao.Inserir(txtMskCPF.Text, txtMskCNPJ.Text, txtNome.Text);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        /// </MODEL>
+
         private void mensagemErro(int flagNome, double flagcodigo)
         {
             //flagNome==0&& flagcodigo==0--->escreve no arquivo e la mostra a mensagem Sucesso

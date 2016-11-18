@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -55,8 +56,11 @@
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Controller\Classes\Tarifa\ITarifa.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Controller\Classes\Tarifa\TarifaComercial.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Controller\Classes\Tarifa\TarifaResidencial.cs" />
-    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\ClienteDAO.cs" />
-    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\ContaDAO.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\Banco_de_Dados\DAL.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\XML\Consumidor\PessoaFisicaDAO.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\XML\Consumidor\PessoaJuridicaDAO.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\XML\Conta\ContaComercialDAO.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\XML\Conta\ContaResidencialDAO.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_View\Cliente\frmCadastrar_Consumidor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +129,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Bloco_de_Notas\Consumidores.txt" />
+    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Bloco_de_Notas\Contas.txt" />
+    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Xml\Cliente\PessoaFisica.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

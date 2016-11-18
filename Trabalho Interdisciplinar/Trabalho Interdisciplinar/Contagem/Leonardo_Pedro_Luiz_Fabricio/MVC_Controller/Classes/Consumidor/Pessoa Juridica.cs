@@ -11,21 +11,38 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Co
         //atributos
         private string cnpj_PessoaJ;
 
-        //get e set
-        public string getCnpj_PessoaJ()
+        //get e set na ordem do XML
+        public string nome_MtdPessoaJ
         {
-            return this.cnpj_PessoaJ;
+            get
+            {
+                return nome_AtrbConsumidor;
+            }
+
+            set
+            {
+                nome_AtrbConsumidor = value;
+            }
         }
-        public void setCnpj_PessoaJ(string cnpj)
+        public string cnpj_MtdPessoaJ
         {
-            this.cnpj_PessoaJ = cnpj;
+            get
+            {
+                return cnpj_PessoaJ;
+            }
+
+            set
+            {
+                cnpj_PessoaJ = value;
+            }
         }
 
         //construtor
         public Pessoa_Juridica(string nome,string cnpj)
         {
-           setNome_Consumidor(nome);
-           this.cnpj_PessoaJ = cnpj;
+            nome_MtdPessoaJ=nome;
+            cnpj_PessoaJ = cnpj;
         }
+        public Pessoa_Juridica() { }//arquivo XML
     }
 }

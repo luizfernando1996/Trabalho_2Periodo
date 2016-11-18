@@ -11,11 +11,11 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Co
     class Conta_Residencial:BaseConta
     {
         //atributos
-        private Pessoa_Fisica cpf_AtrbContaC;
+        private Pessoa_Fisica cpf_AtrbContaR;
 
         //construtor 
         public Conta_Residencial(string nome,string cpf, double leituraAtual, double leituraAnterior) {
-            this.cpf_AtrbContaC = new Pessoa_Fisica(nome,cpf);
+            this.cpf_AtrbContaR = new Pessoa_Fisica(nome,cpf);
             setLeituraAtual_MtdConta(leituraAtual);
             setLeituraAnterior_MtdConta(leituraAnterior);
         }

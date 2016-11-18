@@ -1,0 +1,23 @@
+CREATE DATABASE trabalho_poo;
+USE trabalho_poo;
+
+CREATE TABLE consumidores(
+cpf VARCHAR(11) NOT NULL,
+cnpj VARCHAR(14) NOT NULL,
+nome VARCHAR(60) NOT NUll,
+PRIMARY KEY(cpf,cnpj)
+);
+
+CREATE TABLE conta(
+leitura_atual DOUBLE NOT NULL,
+leitura_anterior DOUBLE NOT NULL,
+consumidores_cpf VARCHAR(11) NOT NULL,
+consumidores_cnpj VARCHAR(14) NOT NULL,
+FOREIGN KEY(consumidores_cpf)
+REFERENCES consumidores(cpf),
+FOREIGN KEY(consumidores_cnpj)
+REFERENCES consumidores(cnpj)
+);
+
+INSERT INTO consumidores VALUES('12225603165','0000000000','Leonardo');
+INSERT INTO conta VALUES(123123,123123,'12225603165','0000000000');
