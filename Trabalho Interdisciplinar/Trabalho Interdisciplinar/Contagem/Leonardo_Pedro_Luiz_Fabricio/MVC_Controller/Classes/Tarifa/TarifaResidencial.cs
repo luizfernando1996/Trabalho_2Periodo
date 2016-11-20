@@ -7,7 +7,7 @@ using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Contro
 
 namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Tarifa
 {
-    class TarifaResidencial:BaseConta,ITarifa
+    class TarifaResidencial:ITarifa
     {
         //atributos
         private double valorTotal_AtrbContaR;

@@ -35,13 +35,36 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Mo
                 sw.WriteLine("______________________________");
             }
         }
-        public int pesquisaConsPraConta(ref string nomeLido, string pessoa, string codigo)
+        public int procuraCodigoPesFisica(ref string nomeLido, string pessoa, string codigo)
         {
             string pessoaLida, codigoLido;
             int flagcodigocadastrado = 1;
 
             //procura o cliente com o cpf/cnpj informado
             using (StreamReader ler = new StreamReader(strPathFile))
+            {
+                while (!ler.EndOfStream)
+                {
+                    nomeLido = ler.ReadLine();//nome
+                    pessoaLida = ler.ReadLine();//Pessoa Física ou Juridica
+                    codigoLido = ler.ReadLine();//cpf ou cnpj
+                    ler.ReadLine();//_________
+                    if (nomeLido != null && pessoaLida != null && codigoLido != null)
+                        if (pessoaLida.Equals(pessoa))
+                            if (codigoLido.Equals(codigo))
+                                flagcodigocadastrado = 0;
+
+                }//fim da procura do cliente
+            }
+            return flagcodigocadastrado;
+        }
+        public int procuraCodigoPesJur(ref string nomeLido, string pessoa, string codigo)
+        {
+            string pessoaLida, codigoLido;
+            int flagcodigocadastrado = 1;
+
+            //procura o cliente com o cpf/cnpj informado
+            using (StreamReader ler = new StreamReader(strPathFile1))
             {
                 while (!ler.EndOfStream)
                 {

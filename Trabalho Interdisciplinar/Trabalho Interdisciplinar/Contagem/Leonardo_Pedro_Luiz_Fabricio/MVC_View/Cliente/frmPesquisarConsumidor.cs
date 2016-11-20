@@ -11,6 +11,7 @@ using System.IO;
 
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Bloco_de_Notas.Consumidor;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.XML.Consumidor;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Banco_de_Dados.Consumidor;
 
 namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Cliente
 {
@@ -126,8 +127,10 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             int flagPessoaEncontrada = 1;
             if (flagNome == 0 && flagCodigo == 0)//Se o usuario digitou o nome e o codigo então irá busca-lo
-                flagPessoaEncontrada = pesquisarConsumidorTxt(Nome, Pessoa, codigo);
+                //flagPessoaEncontrada = pesquisarConsumidorTxt(Nome, Pessoa, codigo);
                 //flagPessoaEncontrada = pesquisarConsumidorXml(Nome, Pessoa, codigo);
+                flagPessoaEncontrada = pesquisarConsumidorBanco(Nome, Pessoa, codigo);
+
             //flagPessoaEncontrada=0-->O codigo foi encontrado e ja foi adicionado na lista
             //flagPessoaEncontrada=1-->O codigo não foi encontrado
 
@@ -209,6 +212,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
             return flagcodigo;
         }
+        //<Procura na memoria>
         public int pesquisarConsumidorTxt(string nome, string pessoa, string codigo)
         {
             int flagPessoaEncontrada = 1;
@@ -274,7 +278,34 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             //o arquivo temporario para ambas as pessoas é o mesmo endereço. Logo se uma pessoa apagar ela apaga para as duas
             return flagPessoaEncontrada;
         }
-
+        public int pesquisarConsumidorBanco(string nome, string pessoa, string codigo)
+        {
+            int flagPessoaEncontrada = 1;
+            try
+            {
+                PessoaFisDAO objPessoaFis = new PessoaFisDAO();
+                PessoaJuriDAO objPessoaJur = new PessoaJuriDAO();
+                if (pessoa == "Pessoa Física")
+                {
+                    objPessoaFis.conectar();
+                    flagPessoaEncontrada = objPessoaFis.pesqPessoaFis(nome, pessoa, codigo);//(nome, pessoa, codigo);
+                }
+                else
+                {
+                    objPessoaJur.conectar();
+                    flagPessoaEncontrada = objPessoaJur.pesqPessoaJur(nome, pessoa, codigo);//(nome, pessoa, codigo);
+                }
+                if (flagPessoaEncontrada == 0)
+                {
+                    //escreve no datagried view
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return flagPessoaEncontrada;
+        }
         private void mensagemErro(int flagNome, double flagCodigo, int flagPessoaEncontrada)
         {
             //flagNome==0 &&flagCodigo==0--->procura o consumidor 

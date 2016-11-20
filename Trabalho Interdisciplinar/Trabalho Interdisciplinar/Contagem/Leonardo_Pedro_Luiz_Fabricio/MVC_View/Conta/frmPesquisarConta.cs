@@ -8,8 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Bloco_de_Notas.Conta;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.XML.Contas;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Banco_de_Dados.Conta;
+
 namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Conta
 {
     public partial class frmPesquisarConta : Form
@@ -95,8 +98,9 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             int flagCodigoEncontrado = 1;
             if (flagCodigo == 0)//só pesquisa se o usuario digitar um cpf ou cnpj
-                flagCodigoEncontrado = pesquisaContaTxt(pessoa, codigo);
-                //flagCodigoEncontrado = pesquisaContaXml(pessoa, codigo);
+            //flagCodigoEncontrado = pesquisaContaTxt(pessoa, codigo);
+           //flagCodigoEncontrado = pesquisaContaXml(pessoa, codigo);
+                flagCodigoEncontrado = pesquisaContaBanco(pessoa, codigo);
 
             //flagcodigoencontrado=0-->O codigo foi encontrado
             //flagcodigoencontrado=1-->O codigo não foi encontrado
@@ -203,6 +207,21 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             cntComDAO.apagarArqTemp();
             //o arquivo temporario das duas contas possui o mesmo endereço.
             //Logo o processo de de exclusão apaga o arquivo temp das duas ontas
+            return flagCodigoEncontrado;
+        }
+        private int pesquisaContaBanco(string pessoa, string codigo)
+        {
+            ContaResDAO objPessoaFis = new ContaResDAO();
+            ContaComDAO objPessoaJur = new ContaComDAO();
+
+            int flagCodigoEncontrado = 1;
+
+            //pesquisa na respectiva conta o codigo
+            if (pessoa == "Pessoa Jurídica")
+                flagCodigoEncontrado = objPessoaJur.pesquisarContaCom(codigo);
+            else
+                flagCodigoEncontrado = objPessoaFis.pesquisarContaRes(codigo);
+
             return flagCodigoEncontrado;
         }
         private void mensagemErro(int flagcodigoencontrado, int flagcodigo)

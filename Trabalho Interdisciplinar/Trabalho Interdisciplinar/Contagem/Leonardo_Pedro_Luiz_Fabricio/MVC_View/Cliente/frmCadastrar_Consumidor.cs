@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Consumidor;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Bloco_de_Notas.Consumidor;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.XML.Consumidor;
-using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Banco_de_Dados;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Banco_de_Dados.Consumidor;
 //foi alterado o parametro CharacterCasing para Upper
 //se digitar r6 e apagar o 6 ai vou ter que apertar 2x o botao cadastrar
 
@@ -131,9 +131,9 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             if (flagNome == 0 && flagcodigo == 0)//escreve no arquivo se as duas flags forem 0
             {
-                escrArqBlocoNotas(nome, pessoa, codigo);
-                escreverArqXml(pessoa, nome, codigo);
-                escreverArqBanco();
+                //escrArqBlocoNotas(nome, pessoa, codigo);
+                //escreverArqXml(nome, pessoa, codigo);
+                escreverArqBanco(nome, pessoa, codigo);
                 Limpar();
             }
             mensagemErro(flagNome, flagcodigo);//imprime uma mensagem se alguma flag não conter 0
@@ -217,9 +217,9 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
                 consDAO.escreverPessoaFisica(nome, pessoa, codigo);
             else
                 consDAO.escreverPessoaJuridica(nome, pessoa, codigo);
-            MessageBox.Show("Cadastro efetuado com sucesso");
+            MessageBox.Show("Cadastro efetuado com sucesso no bloco de notas");
         }
-        private void escreverArqXml(string pessoa, string nome, string codigo)
+        private void escreverArqXml(string nome, string pessoa, string codigo)
         {
             if (pessoa.StartsWith("Pessoa Física"))
             {
@@ -246,20 +246,32 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
                 // clnt.carregar_MtdClienteDAO();
                 clntPJ.salvar_MtdPessoaJuridicaDAO();
             }
+            MessageBox.Show("Conta cadastrada com sucesso no xml");
 
         }
-        private void escreverArqBanco()
+        private void escreverArqBanco(string nome, string pessoa, string codigo)
         {
-            DAL dao = new DAL();
             try
             {
-                dao.Conectar();
-                dao.Inserir(txtMskCPF.Text, txtMskCNPJ.Text, txtNome.Text);
+                if (pessoa.StartsWith("Pessoa Física"))
+                {
+                    PessoaFisDAO objPesFis = new PessoaFisDAO();
+                    objPesFis.conectar();
+                    objPesFis.inserir(nome, pessoa, codigo);
+                }
+                else
+                {
+                    PessoaJuriDAO objPesJur = new PessoaJuriDAO();
+                    objPesJur.conectar();
+                    objPesJur.inserir(nome, pessoa, codigo);
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+            MessageBox.Show("Cliente cadastrado com sucesso no banco de dados");
+
         }
         /// </MODEL>
 

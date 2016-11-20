@@ -56,7 +56,10 @@
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Controller\Classes\Tarifa\ITarifa.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Controller\Classes\Tarifa\TarifaComercial.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Controller\Classes\Tarifa\TarifaResidencial.cs" />
-    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\Banco_de_Dados\DAL.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\Banco_de_Dados\Consumidor\PessoaFisDAO.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\Banco_de_Dados\Consumidor\PessoaJuriDAO.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\Banco_de_Dados\Conta\ContaComDAO.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\Banco_de_Dados\Conta\ContaResDAO.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\Bloco_de_Notas\Consumidor\PessoaDAO.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\Bloco_de_Notas\Conta\ContaDAO.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\XML\Consumidor\PessoaFisicaDAO.cs" />

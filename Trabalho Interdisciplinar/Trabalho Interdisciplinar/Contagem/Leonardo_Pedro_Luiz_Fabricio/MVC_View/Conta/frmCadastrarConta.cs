@@ -9,14 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
+//classes
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Contas;
-
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Tarifa;
+//dal
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Bloco_de_Notas.Consumidor;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Bloco_de_Notas.Conta;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.XML.Contas;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.XML.Consumidor;
-using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Conta;
-using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Tarifa;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Banco_de_Dados.Consumidor;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Banco_de_Dados.Conta;
+
+
 //Os nomes das pastas possuem MVC antes para evitar o erro de referencia
 //Este erro de referencia ocorre porque um dos atributos da listView é um atrbituo chamado View e desta forma
 //quando se coloca o nome da pasta de view o programa não consegue saber qual dos dois definir.
@@ -113,7 +117,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             int flagcodigocadastrado = 1;
             string nomeLido = null;
             if (flagCodigo == 0)
-                flagcodigocadastrado = procuraCodigo(ref nomeLido, pessoa, codigo);
+                flagcodigocadastrado = procuraCodigoTxt(ref nomeLido, pessoa, codigo);
             //flagcodigocadastrado=0---> O cliente foi cadastrado
             //flagcodigocadastrado=1---> O cliente ainda não foi cadastrado
 
@@ -121,8 +125,9 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             //Se flagcodigocadastrado=0 então flagCodigo=0
             {
                 double num = sincroniaConta_Consumidor(pessoa, codigo, nomeLido, leituraAtual, leituraAnterior);
-                cadastrarContaTxt(pessoa,codigo, leituraAtual, leituraAnterior, num);
-                cadastrarContaXml(pessoa, codigo, leituraAtual, leituraAnterior, num);
+                //cadastrarContaTxt(pessoa, codigo, leituraAtual, leituraAnterior, num);
+                //cadastrarContaXml(pessoa, codigo, leituraAtual, leituraAnterior, num);
+                cadastrarContaBanco(pessoa,codigo,leituraAtual,leituraAnterior,num);
             }
             mensagemErro(flagCodigo, flagLeitura, flagcodigocadastrado);
         }
@@ -189,16 +194,46 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             return flagLeitura;
         }
-        public int procuraCodigo(ref string nomeLido, string pessoa, string codigo)
+
+        //<pesquisa na memoria>
+        public int procuraCodigoTxt(ref string nomeLido, string pessoa, string codigo)
         {
             int flagcodigocadastrado = 1;
 
             PessoaDAO consDAO = new PessoaDAO();
-            flagcodigocadastrado = consDAO.pesquisaConsPraConta(ref nomeLido, pessoa, codigo);
+            if (pessoa == "Pessoa Física")
+                flagcodigocadastrado = consDAO.procuraCodigoPesFisica(ref nomeLido, pessoa, codigo);
+            else
+                flagcodigocadastrado = consDAO.procuraCodigoPesJur(ref nomeLido, pessoa, codigo);
 
             return flagcodigocadastrado;
-
         }
+        //public int procuraCodigoXml(ref string nomeLido, string pessoa, string codigo)
+        //{
+        //    int flagcodigocadastrado = 1;
+
+        //    PessoaDAO consDAO = new PessoaDAO();
+        //    flagcodigocadastrado = consDAO.pesquisaConsPraConta(ref nomeLido, pessoa, codigo);
+
+        //    return flagcodigocadastrado;
+
+        //}
+        public int procuraCodigoBanco(ref string nomeLido, string pessoa, string codigo)
+        {
+            int flagcodigocadastrado = 1;
+
+            PessoaFisDAO objPesFis = new PessoaFisDAO();
+            PessoaJuriDAO objPesJur = new PessoaJuriDAO();
+
+            if (pessoa == "Pessoa Física")
+                flagcodigocadastrado = objPesFis.procuraCodigoPesFisica(ref nomeLido, pessoa, codigo);
+            else
+                flagcodigocadastrado = objPesJur.procuraCodigoPesJur(ref nomeLido, pessoa, codigo);
+
+            return flagcodigocadastrado;
+        }
+        //<pesquisa na memoria>
+
         public double sincroniaConta_Consumidor(string pessoa, string codigo, string nomeLido, double leituraAtual, double leituraAnterior)
         {
             //referencias
@@ -223,7 +258,8 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
             return num;//retorna um consumo
         }
-        /// <banco de dados>
+
+        //<persistencia>
         public void cadastrarContaTxt(string pessoa, string codigo, double leituraAtual, double leituraAnterior, double num)
         {
             if (pessoa == "Pessoa Física")
@@ -274,7 +310,43 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             MessageBox.Show("Conta cadastrada com sucesso no xml");
             Limpar();
         }
-        /// </banco de dados>
+        public void cadastrarContaBanco(string pessoa, string codigo, double leituraAtual, double leituraAnterior, double num)
+        {
+            ContaResDAO objPessoaFis = new ContaResDAO();
+            ContaComDAO objPessoaJur = new ContaComDAO();
+            try
+            {
+                if (pessoa == "Pessoa Física")
+                {
+                    objPessoaFis.conectar();
+                    num=Math.Round(num, 2);//valor final da conta arredondada para 2 casas decimais
+
+                    string leituraAtual1 = "Leitura Atual: " + leituraAtual;
+                    string leituraAnterior1 = "Leitura Anterior: " + leituraAnterior;
+                    string num1 = "R$: " + num;
+
+                    objPessoaFis.inserir(codigo, leituraAtual1, leituraAnterior1, num1);//(nome, pessoa, codigo);
+                    MessageBox.Show("Conta cadastrada com sucesso no banco de dados");
+                }
+                else
+                {
+                    objPessoaJur.conectar();
+                    num = Math.Round(num, 2);//valor final da conta arredondada para 2 casas decimais
+
+                    string leituraAtual1="Leitura Atual: " + leituraAtual;
+                    string leituraAnterior1 = "Leitura Anterior: " + leituraAnterior;
+                    string num1="R$: "+ num;
+                    objPessoaJur.inserir(codigo, leituraAtual1, leituraAnterior1, num1);
+                    MessageBox.Show("Conta cadastrada com sucesso no banco de dados");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        //</persistencia>
+
         public void mensagemErro(int flagCodigo, int flagLeitura, int flagPessoaEncontrada)
         {
             //17 combinações possiveis-->16 +1

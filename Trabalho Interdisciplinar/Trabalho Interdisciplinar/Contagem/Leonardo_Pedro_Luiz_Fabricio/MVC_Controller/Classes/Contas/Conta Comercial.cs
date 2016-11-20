@@ -71,7 +71,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Co
         {
             cnpjJurid_AtrbContaC = new Pessoa_Juridica(nome, cnpj);
             leituraAtual_MtdConta = leituraAtual;
-            leituraAtual_MtdConta = leituraAnterior;
+            leituraAnterior_MtdConta = leituraAnterior;
         }
         public Conta_Comercial() { }
 

@@ -36,4 +36,22 @@
     <leituraAnterior_MtdConta>1</leituraAnterior_MtdConta>
     <tarifa_MtdContaComercialXml>R$: 10,92</tarifa_MtdContaComercialXml>
   </Conta_Comercial>
+  <Conta_Comercial>
+    <cnpjJurid_MtdContaC>CNPJ: 88,888,888/8888-88</cnpjJurid_MtdContaC>
+    <leituraAtual_MtdConta>157</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>7</leituraAnterior_MtdConta>
+    <tarifa_MtdContaComercialXml>R$: 10,92</tarifa_MtdContaComercialXml>
+  </Conta_Comercial>
+  <Conta_Comercial>
+    <cnpjJurid_MtdContaC>CNPJ: 88,888,888/8888-88</cnpjJurid_MtdContaC>
+    <leituraAtual_MtdConta>222</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>4</leituraAnterior_MtdConta>
+    <tarifa_MtdContaComercialXml>R$: 10,92</tarifa_MtdContaComercialXml>
+  </Conta_Comercial>
+  <Conta_Comercial>
+    <cnpjJurid_MtdContaC>CNPJ: 88,888,888/8888-88</cnpjJurid_MtdContaC>
+    <leituraAtual_MtdConta>200</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>10</leituraAnterior_MtdConta>
+    <tarifa_MtdContaComercialXml>R$: 89,38</tarifa_MtdContaComercialXml>
+  </Conta_Comercial>
 </ArrayOfConta_Comercial>

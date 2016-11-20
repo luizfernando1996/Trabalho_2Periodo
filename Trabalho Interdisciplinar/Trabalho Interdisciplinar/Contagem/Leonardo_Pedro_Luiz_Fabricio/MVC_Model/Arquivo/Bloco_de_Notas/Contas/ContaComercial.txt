@@ -3,3 +3,18 @@ Leitura Atual: 123
 Leitura Anterior: 1
 R$: 10,92
 ______________________________
+CNPJ: 88,888,888/8888-88
+Leitura Atual: 157
+Leitura Anterior: 7
+R$: 10,92
+______________________________
+CNPJ: 88,888,888/8888-88
+Leitura Atual: 222
+Leitura Anterior: 4
+R$: 10,92
+______________________________
+CNPJ: 88,888,888/8888-88
+Leitura Atual: 200
+Leitura Anterior: 10
+R$: 89,38
+______________________________
