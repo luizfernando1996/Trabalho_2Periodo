@@ -8,10 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Contas;
+
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Bloco_de_Notas.Consumidor;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Bloco_de_Notas.Conta;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.XML.Contas;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.XML.Consumidor;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Conta;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Tarifa;
-
-
 //Os nomes das pastas possuem MVC antes para evitar o erro de referencia
 //Este erro de referencia ocorre porque um dos atributos da listView é um atrbituo chamado View e desta forma
 //quando se coloca o nome da pasta de view o programa não consegue saber qual dos dois definir.
@@ -23,10 +28,6 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 {
     public partial class frmCadastrarConta : Form
     {
-        //caminhos dos arquivos
-        private string strPathFile = @"C:/Users/Admin/Desktop/Trabalho Interdisciplinar/Trabalho Interdisciplinar/Contagem/Leonardo_Pedro_Luiz_Fabricio/MVC_Model/Arquivos/Bloco_de_Notas/Contas.txt";
-        private string strPathFile2 = @"C:/Users/Admin/Desktop/Trabalho Interdisciplinar/Trabalho Interdisciplinar/Contagem/Leonardo_Pedro_Luiz_Fabricio/MVC_Model/Arquivo/Bloco_de_Notas/Consumidores.txt";
-
 
         //inicializador do form
         public frmCadastrarConta()
@@ -88,7 +89,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             txtLeituraAnterior.Clear();
             txtLeituraAtual.Clear();
         }
-        private void Cadastrar()
+        public void Cadastrar()
         {
             string pessoa = verfPessoa();
             //Pessoa--->Atribui a Pessoa a string Pessoa Jurídica ou Pessoa Física
@@ -117,9 +118,12 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             //flagcodigocadastrado=1---> O cliente ainda não foi cadastrado
 
             if (flagcodigocadastrado == 0 && flagLeitura == 0)
-                //Se flagcodigocadastrado=0 então flagCodigo=0
-                cadastrarConta(pessoa, codigo, ref nomeLido, leituraAtual, leituraAnterior);
-
+            //Se flagcodigocadastrado=0 então flagCodigo=0
+            {
+                double num = sincroniaConta_Consumidor(pessoa, codigo, nomeLido, leituraAtual, leituraAnterior);
+                cadastrarContaTxt(pessoa,codigo, leituraAtual, leituraAnterior, num);
+                cadastrarContaXml(pessoa, codigo, leituraAtual, leituraAnterior, num);
+            }
             mensagemErro(flagCodigo, flagLeitura, flagcodigocadastrado);
         }
         public string verfPessoa()
@@ -134,7 +138,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             return Pessoa;
 
         }
-        private int verfDigitouCpf_Cnpj(ref string codigo)
+        public int verfDigitouCpf_Cnpj(ref string codigo)
         {
             //string codigo,pessoa;
             int flagcodigo = 0;
@@ -158,7 +162,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
             return flagcodigo;
         }
-        private int verfLeitura(ref double leituraAnterior, ref double leituraAtual)
+        public int verfLeitura(ref double leituraAnterior, ref double leituraAtual)
         {
             int flagLeitura = 0;
             if (txtLeituraAtual.Text == "")
@@ -185,62 +189,93 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             return flagLeitura;
         }
-        private int procuraCodigo(ref string nomeLido, string pessoa, string codigo)
+        public int procuraCodigo(ref string nomeLido, string pessoa, string codigo)
         {
-            string pessoaLida, codigoLido;
             int flagcodigocadastrado = 1;
 
-            //procura o cliente com o cpf/cnpj informado
-            using (StreamReader ler = new StreamReader(strPathFile2))
-            {
-                while (!ler.EndOfStream)
-                {
-                    nomeLido = ler.ReadLine();//nome
-                    pessoaLida = ler.ReadLine();//Pessoa Física ou Juridica
-                    codigoLido = ler.ReadLine();//cpf ou cnpj
-                    ler.ReadLine();//_________
-                    if (nomeLido != null && pessoaLida != null && codigoLido != null)
-                        if (pessoaLida.Equals(pessoa))
-                            if (codigoLido.Equals(codigo))
-                                flagcodigocadastrado = 0;
-                }//fim da procura do cliente
-            }
+            PessoaDAO consDAO = new PessoaDAO();
+            flagcodigocadastrado = consDAO.pesquisaConsPraConta(ref nomeLido, pessoa, codigo);
+
             return flagcodigocadastrado;
+
         }
-        private void cadastrarConta(string pessoa, string codigo, ref string nomeLido, double leituraAtual, double leituraAnterior)
+        public double sincroniaConta_Consumidor(string pessoa, string codigo, string nomeLido, double leituraAtual, double leituraAnterior)
         {
             //referencias
             ITarifa trf;
             BaseConta bcnt;
 
-            using (StreamWriter sw = File.AppendText(strPathFile))
+            double num = 2;
+            if (pessoa == "Pessoa Física")
             {
-                double num = 2;
-                if (pessoa == "Pessoa Física")
-                {
-                    bcnt = new Conta_Residencial(nomeLido, codigo, leituraAtual, leituraAnterior);
-                    //seto os valores das leituras na classe base
-                    trf = new TarifaResidencial();
-                    bcnt.setTarifa(trf);//tava sem o trf
-                    num = bcnt.tarifa_Mtd(bcnt);
-                }
-                else
-                {
-                    bcnt = new Conta_Comercial(nomeLido, codigo, leituraAtual, leituraAnterior);
-                    trf = new TarifaComercial();
-                    bcnt.setTarifa(trf);
-                    num = bcnt.tarifa_Mtd(bcnt);
-                }
-                sw.WriteLine(codigo);
-                sw.WriteLine("Leitura Atual: " + txtLeituraAtual.Text);
-                sw.WriteLine("Leitura Anterior: " + txtLeituraAnterior.Text);
-                sw.WriteLine("R$: " + Math.Round(num, 2));
-                sw.WriteLine("______________________________");
-                MessageBox.Show("Conta cadastrada com sucesso");
-                Limpar();
+                bcnt = new Conta_Residencial(nomeLido, codigo, leituraAtual, leituraAnterior);
+                //seto os valores das leituras na classe base
+                trf = new TarifaResidencial();
+                bcnt.setTarifa(trf);//tava sem o trf
+                num = bcnt.tarifa_MtdBaseConta(bcnt);
             }
+            else
+            {
+                bcnt = new Conta_Comercial(nomeLido, codigo, leituraAtual, leituraAnterior);
+                trf = new TarifaComercial();
+                bcnt.setTarifa(trf);
+                num = bcnt.tarifa_MtdBaseConta(bcnt);
+            }
+            return num;//retorna um consumo
         }
-        private void mensagemErro(int flagCodigo, int flagLeitura, int flagPessoaEncontrada)
+        /// <banco de dados>
+        public void cadastrarContaTxt(string pessoa, string codigo, double leituraAtual, double leituraAnterior, double num)
+        {
+            if (pessoa == "Pessoa Física")
+            {
+                ContaDAO contaDAO = new ContaDAO();
+                contaDAO.escreverContaRes(codigo, leituraAtual, leituraAnterior, num);
+            }
+            else
+            {
+                ContaDAO contaDAO = new ContaDAO();
+                contaDAO.escreverContaCom(codigo, leituraAtual, leituraAnterior, num);
+            }
+            MessageBox.Show("Conta cadastrada com sucesso no txt");
+            Limpar();
+
+        }
+        public void cadastrarContaXml(string pessoa, string codigo, double leituraAtual, double leituraAnterior, double num)
+        {
+
+            if (pessoa == "Pessoa Física")
+            {
+                ContaResidencialDAO contaResidencial = new ContaResidencialDAO();
+                contaResidencial.carregar_MtdContaResidencialDAO();
+                Conta_Residencial cntRes = new Conta_Residencial()
+                {
+                    cpf = codigo,
+                    leituraAtual_MtdConta = leituraAtual,
+                    leituraAnterior_MtdConta = leituraAnterior,
+                    tarifa_MtdContaResidencialXml = ("R$: " + Math.Round(num, 2))
+                };
+                contaResidencial.adicionar_MtdContaResidencialDAO(cntRes);
+                contaResidencial.salvar_MtdContaResidencialDAO();
+            }
+            else
+            {
+                ContaComercialDAO cntComercial = new ContaComercialDAO();
+                cntComercial.carregar_MtdContaComercialDAO();
+                Conta_Comercial cntCom = new Conta_Comercial()
+                {
+                    cnpjJurid_MtdContaC = codigo,
+                    leituraAtual_MtdConta = leituraAtual,
+                    leituraAnterior_MtdConta = leituraAnterior,
+                    tarifa_MtdContaComercialXml = ("R$: " + Math.Round(num, 2))
+                };
+                cntComercial.adicionar_MtdContaComercialDAO(cntCom);
+                cntComercial.salvar_MtdContaComercialDAO();
+            }
+            MessageBox.Show("Conta cadastrada com sucesso no xml");
+            Limpar();
+        }
+        /// </banco de dados>
+        public void mensagemErro(int flagCodigo, int flagLeitura, int flagPessoaEncontrada)
         {
             //17 combinações possiveis-->16 +1
             //flagCodigo==0&&flagLeitura==0&&flagPessoaEncontrada==0-->Cliente cadastrado

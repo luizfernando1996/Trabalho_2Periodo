@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Consumidor
 {
-    class Pessoa_Juridica:Consumidor
+    public class Pessoa_Juridica: Consumidor//public para serializar
     {
         //atributos
         private string cnpj_PessoaJ;

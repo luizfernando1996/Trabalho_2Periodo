@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
+
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Consumidor;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Bloco_de_Notas.Consumidor;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.XML.Consumidor;
 using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Banco_de_Dados;
 //foi alterado o parametro CharacterCasing para Upper
@@ -26,10 +27,6 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
     {
         //atributo
         int flagNome = 1;
-
-        //caminho do arquivo
-        private string strPathFile = @"C:/Users/Admin/Desktop/Trabalho Interdisciplinar/Trabalho Interdisciplinar/Contagem/Leonardo_Pedro_Luiz_Fabricio/MVC_Model/Arquivo/Bloco_de_Notas/Consumidores.txt";
-
 
         //inicializador do form
         public frmCadastrar_Consumidor()
@@ -135,7 +132,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             if (flagNome == 0 && flagcodigo == 0)//escreve no arquivo se as duas flags forem 0
             {
                 escrArqBlocoNotas(nome, pessoa, codigo);
-                escreverArqXml(pessoa,nome, codigo);
+                escreverArqXml(pessoa, nome, codigo);
                 escreverArqBanco();
                 Limpar();
             }
@@ -215,42 +212,41 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         //  <MODEL>
         private void escrArqBlocoNotas(string nome, string pessoa, string codigo)
         {
-            using (StreamWriter sw = File.AppendText(strPathFile))
-            {
-                sw.WriteLine(nome);
-                sw.WriteLine(pessoa);
-                sw.WriteLine(codigo);
-                sw.WriteLine("______________________________");
-                MessageBox.Show("Cadastro efetuado com sucesso");
-            }
+            PessoaDAO consDAO = new PessoaDAO();
+            if (pessoa == "Pessoa Fisica")
+                consDAO.escreverPessoaFisica(nome, pessoa, codigo);
+            else
+                consDAO.escreverPessoaJuridica(nome, pessoa, codigo);
+            MessageBox.Show("Cadastro efetuado com sucesso");
         }
-        private void escreverArqXml(string pessoa,string nome, string codigo)
+        private void escreverArqXml(string pessoa, string nome, string codigo)
         {
             if (pessoa.StartsWith("Pessoa Física"))
             {
                 PessoaFisicaDAO clntPF = new PessoaFisicaDAO();
+                clntPF.carregar_MtdPessoaFisicaDAO();//antes de adicionar é melhor carregar
                 Pessoa_Fisica pf = new Pessoa_Fisica()
                 {
                     nome_MtdPessoaF = nome,
                     cpf_MtdPessoaF = codigo
                 };
                 clntPF.adicionar_MtdPessoaFisicaDAO(pf);
-                // clnt.carregar_MtdClienteDAO();
                 clntPF.salvar_MtdPessoaFisicaDAO();
             }
             else
             {
                 PessoaJuridicaDAO clntPJ = new PessoaJuridicaDAO();
+                clntPJ.carregar_MtdPessoaJuridicaDAO();
                 Pessoa_Juridica pj = new Pessoa_Juridica()
                 {
                     nome_MtdPessoaJ = nome,
                     cnpj_MtdPessoaJ = codigo
                 };
-                clntPJ.adicionar_MtdPessoaFisicaDAO(pj);
+                clntPJ.adicionar_MtdPessoaJuridicaDAO(pj);
                 // clnt.carregar_MtdClienteDAO();
-                clntPJ.salvar_MtdPessoaFisicaDAO();
+                clntPJ.salvar_MtdPessoaJuridicaDAO();
             }
-            
+
         }
         private void escreverArqBanco()
         {

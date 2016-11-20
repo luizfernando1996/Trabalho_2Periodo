@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<ArrayOfConta_Residencial xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Conta_Residencial>
+    <cpf>CPF: 111,111,111-11</cpf>
+    <leituraAtual_MtdConta>12</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>1</leituraAnterior_MtdConta>
+    <tarifa_MtdContaResidencialXml>R$: 17,74</tarifa_MtdContaResidencialXml>
+  </Conta_Residencial>
+  <Conta_Residencial>
+    <cpf>CPF: 111,111,111-11</cpf>
+    <leituraAtual_MtdConta>1212</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>1</leituraAnterior_MtdConta>
+    <tarifa_MtdContaResidencialXml>R$: 641,74</tarifa_MtdContaResidencialXml>
+  </Conta_Residencial>
+  <Conta_Residencial>
+    <cpf>CPF: 111,111,111-11</cpf>
+    <leituraAtual_MtdConta>150</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>1</leituraAnterior_MtdConta>
+    <tarifa_MtdContaResidencialXml>R$: 89,5</tarifa_MtdContaResidencialXml>
+  </Conta_Residencial>
+  <Conta_Residencial>
+    <cpf>CPF: 585,888,888-88</cpf>
+    <leituraAtual_MtdConta>150</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>5</leituraAnterior_MtdConta>
+    <tarifa_MtdContaResidencialXml>R$: 87,42</tarifa_MtdContaResidencialXml>
+  </Conta_Residencial>
+  <Conta_Residencial>
+    <cpf>CPF: 111,111,111-11</cpf>
+    <leituraAtual_MtdConta>123</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>1</leituraAnterior_MtdConta>
+    <tarifa_MtdContaResidencialXml>R$: 75,46</tarifa_MtdContaResidencialXml>
+  </Conta_Residencial>
+</ArrayOfConta_Residencial>

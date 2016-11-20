@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ArrayOfPessoa_Juridica xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Pessoa_Juridica>
+    <nome_MtdPessoaJ>EW</nome_MtdPessoaJ>
+    <cnpj_MtdPessoaJ>CNPJ: 66,666,666/6666-66</cnpj_MtdPessoaJ>
+  </Pessoa_Juridica>
+  <Pessoa_Juridica>
+    <nome_MtdPessoaJ>ER</nome_MtdPessoaJ>
+    <cnpj_MtdPessoaJ>CNPJ: 85,877,777/7777-77</cnpj_MtdPessoaJ>
+  </Pessoa_Juridica>
+  <Pessoa_Juridica>
+    <nome_MtdPessoaJ>QQW</nome_MtdPessoaJ>
+    <cnpj_MtdPessoaJ>CNPJ: 99,999,999/9999-99</cnpj_MtdPessoaJ>
+  </Pessoa_Juridica>
+  <Pessoa_Juridica>
+    <nome_MtdPessoaJ>UU</nome_MtdPessoaJ>
+    <cnpj_MtdPessoaJ>CNPJ: 22,222,222/2222-22</cnpj_MtdPessoaJ>
+  </Pessoa_Juridica>
+  <Pessoa_Juridica>
+    <nome_MtdPessoaJ>EWQ</nome_MtdPessoaJ>
+    <cnpj_MtdPessoaJ>CNPJ: 88,888,888/8888-88</cnpj_MtdPessoaJ>
+  </Pessoa_Juridica>
+</ArrayOfPessoa_Juridica>

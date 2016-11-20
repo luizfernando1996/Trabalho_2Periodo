@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<ArrayOfConta_Comercial xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Conta_Comercial>
+    <cnpjJurid_MtdContaC>CNPJ: 33,333,333/3333-33</cnpjJurid_MtdContaC>
+    <leituraAtual_MtdConta>122</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>1</leituraAnterior_MtdConta>
+    <tarifa_MtdContaComercialXml>R$: 10,92</tarifa_MtdContaComercialXml>
+  </Conta_Comercial>
+  <Conta_Comercial>
+    <cnpjJurid_MtdContaC>CNPJ: 33,333,333/3333-33</cnpjJurid_MtdContaC>
+    <leituraAtual_MtdConta>54</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>4</leituraAnterior_MtdConta>
+    <tarifa_MtdContaComercialXml>R$: 10,92</tarifa_MtdContaComercialXml>
+  </Conta_Comercial>
+  <Conta_Comercial>
+    <cnpjJurid_MtdContaC>CNPJ: 11,111,111/1111-11</cnpjJurid_MtdContaC>
+    <leituraAtual_MtdConta>150</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>1</leituraAnterior_MtdConta>
+    <tarifa_MtdContaComercialXml>R$: 10,92</tarifa_MtdContaComercialXml>
+  </Conta_Comercial>
+  <Conta_Comercial>
+    <cnpjJurid_MtdContaC>CNPJ: 33,333,333/3333-33</cnpjJurid_MtdContaC>
+    <leituraAtual_MtdConta>154</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>5</leituraAnterior_MtdConta>
+    <tarifa_MtdContaComercialXml>R$: 10,92</tarifa_MtdContaComercialXml>
+  </Conta_Comercial>
+  <Conta_Comercial>
+    <cnpjJurid_MtdContaC>CNPJ: 99,999,999/9999-99</cnpjJurid_MtdContaC>
+    <leituraAtual_MtdConta>85</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>8</leituraAnterior_MtdConta>
+    <tarifa_MtdContaComercialXml>R$: 10,92</tarifa_MtdContaComercialXml>
+  </Conta_Comercial>
+  <Conta_Comercial>
+    <cnpjJurid_MtdContaC>CNPJ: 22,222,222/2222-22</cnpjJurid_MtdContaC>
+    <leituraAtual_MtdConta>123</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>1</leituraAnterior_MtdConta>
+    <tarifa_MtdContaComercialXml>R$: 10,92</tarifa_MtdContaComercialXml>
+  </Conta_Comercial>
+</ArrayOfConta_Comercial>

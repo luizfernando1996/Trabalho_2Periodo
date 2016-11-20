@@ -8,13 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Bloco_de_Notas.Conta;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.XML.Contas;
 namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Conta
 {
     public partial class frmPesquisarConta : Form
     {
         //caminho do arquivo
-        private string strPathFile = @"C:/Users/Admin/Desktop/Trabalho Interdisciplinar/Trabalho Interdisciplinar/Contagem/Leonardo_Pedro_Luiz_Fabricio/MVC_Model/Arquivos/Bloco_de_Notas/Contas.txt";
+        private string strPathFileTemp = @"C:/Users/Admin/Source/Repos/Trabalho_2Periodo/Trabalho Interdisciplinar/Trabalho Interdisciplinar/Contagem/Leonardo_Pedro_Luiz_Fabricio/MVC_Model/Arquivo/Bloco_de_Notas/Contas/Conta.tmp";
+        private string strPathFileTemp1 = @"C:/Users/Admin/Source/Repos/Trabalho_2Periodo/Trabalho Interdisciplinar/Trabalho Interdisciplinar/Contagem/Leonardo_Pedro_Luiz_Fabricio/MVC_Model/Arquivo/Xml/Contas/Conta.tmp";
 
         //inicializador do form
         public frmPesquisarConta()
@@ -80,6 +82,9 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         }
         private void Pesquisar()
         {
+            string pessoa = null;
+            pessoa = verfPessoa();
+
             string codigo = null;
             int flagCodigo = 1;
             flagCodigo = verfCod(ref codigo);
@@ -90,12 +95,25 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             int flagCodigoEncontrado = 1;
             if (flagCodigo == 0)//só pesquisa se o usuario digitar um cpf ou cnpj
-                flagCodigoEncontrado = pesquisaConta(codigo);
+                flagCodigoEncontrado = pesquisaContaTxt(pessoa, codigo);
+                //flagCodigoEncontrado = pesquisaContaXml(pessoa, codigo);
+
             //flagcodigoencontrado=0-->O codigo foi encontrado
             //flagcodigoencontrado=1-->O codigo não foi encontrado
 
             mensagemErro(flagCodigoEncontrado, flagCodigo);
             //imprime mensagem de erro se alguma flag não for 0
+        }
+        public string verfPessoa()
+        {
+            string pessoa;
+            if (rdbPessoaFisica.Checked)
+            {
+                pessoa = "Pessoa Física";
+            }
+            else
+                pessoa = "Pessoa Jurídica";
+            return pessoa;
         }
         private int verfCod(ref string codigo)
         {
@@ -121,31 +139,70 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
             return flagcodigo;
         }
-        private int pesquisaConta(string codigo)
+        private int pesquisaContaTxt(string pessoa, string codigo)
         {
+            ContaDAO cntDAO = new ContaDAO();
             int flagCodigoEncontrado = 1;
-            using (StreamReader ler = new StreamReader(strPathFile))
+
+            //pesquisa na respectiva conta o codigo
+            if (pessoa == "Pessoa Jurídica")
+                flagCodigoEncontrado = cntDAO.pesquisarContaCom(codigo);
+            else
+                flagCodigoEncontrado = cntDAO.pesquisarContaRes(codigo);
+
+
+            if (flagCodigoEncontrado == 0)
             {
-                string leitura, leitura2,leitura3;
-                while (!ler.EndOfStream)
+                using (StreamReader ler = new StreamReader(strPathFileTemp))
                 {
-                    leitura = ler.ReadLine();//lê o cpf
-                    ler.ReadLine();//lê a leitura Atual
-                    ler.ReadLine();//lê a leitura Anterior
-                    leitura2 = ler.ReadLine();//lê o valor da conta
-                    leitura3=ler.ReadLine();//lê o _____
-                // if (String.IsNullOrEmpty(leitura3))
-                    if (leitura3 != null)
-                        if (leitura.Equals(codigo))
-                        {
-                            flagCodigoEncontrado = 0;
-                            ListViewItem lista = new ListViewItem(leitura);
-                            lista.SubItems.Add(leitura2);
-                            listViewResultadoConta.Items.Add(lista);
-                            //adiciona na view lista desejada(listViewResultadoConsum) os itens leitura e leitura 2
-                        }
-                }
-            }//fim do using
+                    string leitura, leitura2;
+                    while (!ler.EndOfStream)
+                    {
+                        leitura = ler.ReadLine();//lê o cpf
+                        leitura2 = ler.ReadLine();//lê o valor da conta
+                        ListViewItem lista = new ListViewItem(leitura);
+                        lista.SubItems.Add(leitura2);
+                        listViewResultadoConta.Items.Add(lista);
+                        //adiciona na view lista desejada(listViewResultadoConsum) os itens leitura e leitura 2
+                    }
+                }//fim do using
+            }
+            cntDAO.apagarArqTemp();
+            return flagCodigoEncontrado;
+        }
+        private int pesquisaContaXml(string pessoa, string codigo)
+        {
+            ContaComercialDAO cntComDAO = new ContaComercialDAO();
+            ContaResidencialDAO cntResDAO = new ContaResidencialDAO();
+
+            int flagCodigoEncontrado = 1;
+
+            //pesquisa na respectiva conta o codigo
+            if (pessoa == "Pessoa Jurídica")
+                flagCodigoEncontrado = cntComDAO.pesquisarContaCom(codigo);
+            else
+                flagCodigoEncontrado = cntResDAO.pesquisarContaRes(codigo);
+
+
+            if (flagCodigoEncontrado == 0)
+            {
+                using (StreamReader ler = new StreamReader(strPathFileTemp1))
+                {
+                    string leitura, leitura2;
+                    while (!ler.EndOfStream)
+                    {
+                        leitura = ler.ReadLine();//lê o codigo
+                        leitura2 = ler.ReadLine();//lê o valor da conta
+                        ListViewItem lista = new ListViewItem(leitura);
+                        lista.SubItems.Add(leitura2);
+                        listViewResultadoConta.Items.Add(lista);
+                        //adiciona na view lista desejada(listViewResultadoConsum) os itens leitura e leitura 2
+                    }
+                }//fim do using
+            }
+            cntComDAO.apagarArqTemp();
+            //o arquivo temporario das duas contas possui o mesmo endereço.
+            //Logo o processo de de exclusão apaga o arquivo temp das duas ontas
             return flagCodigoEncontrado;
         }
         private void mensagemErro(int flagcodigoencontrado, int flagcodigo)

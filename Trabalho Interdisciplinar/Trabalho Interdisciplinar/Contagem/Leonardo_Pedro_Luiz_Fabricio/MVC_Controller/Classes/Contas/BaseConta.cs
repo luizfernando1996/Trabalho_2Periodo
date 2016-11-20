@@ -7,52 +7,35 @@ using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Contro
 
 namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Contas
 {
-    class BaseConta//retirei o public
+    public abstract class BaseConta//retirei o public
     {
         //atributos
-        public ITarifa trf;
-        private double tarifa;
-
-        private double leituraAtual_AtrbConta;
-        private double leituraAnterior_AtrbConta;
+        private ITarifa trf;
+        protected double tarifa;
+        
+        protected double leituraAtual_AtrbConta;
+        protected double leituraAnterior_AtrbConta;
         private double consumo_AtrbConta;
+        private string tarifa_AtrbContaComercialXml;
 
-        //get e set
-        public void setLeituraAtual_MtdConta(double valor)
-        {
-            this.leituraAtual_AtrbConta = valor;
-            Console.WriteLine(leituraAtual_AtrbConta);
-        }
-        public double getLeituraAtual_MtdConta()
-        {
-            return this.leituraAtual_AtrbConta;
-        }
-        public void setLeituraAnterior_MtdConta(double valor)
-        {
-            this.leituraAnterior_AtrbConta = valor;
-            Console.WriteLine(leituraAnterior_AtrbConta);
-
-        }
-        public double getLeituraAnterior_MtdConta()
-        {
-            return this.leituraAnterior_AtrbConta;
-        }
 
         //demais métodos
         public double consumo_MtdConta()
         {
-            consumo_AtrbConta = getLeituraAtual_MtdConta() - getLeituraAnterior_MtdConta();
+            consumo_AtrbConta = leituraAtual_AtrbConta - leituraAnterior_AtrbConta;
             return consumo_AtrbConta;
         }
         public void setTarifa(ITarifa trf2)
         {
             trf = trf2;
         }
-        public double tarifa_Mtd(BaseConta bnt)
+        public double tarifa_MtdBaseConta(BaseConta bnt)
         {
-            tarifa=trf.tarifaConta(bnt);
+            tarifa = trf.tarifaConta(bnt);
             return tarifa;
         }
+        //construtor
+        public BaseConta() { }
 
     }
 }

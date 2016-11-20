@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.Bloco_de_Notas.Consumidor;
+using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Model.DAL.XML.Consumidor;
+
 namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Cliente
 {
     public partial class frmPesquisarConsumidor : Form
@@ -16,8 +19,8 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         //atributo
         int flagNome = 1;
 
-        //caminho do arquivo
-        private string strPathFile = @"C:/Users/Admin/Desktop/Trabalho Interdisciplinar/Trabalho Interdisciplinar/Contagem/Leonardo_Pedro_Luiz_Fabricio/MVC_Model/Arquivo/Bloco_de_Notas/Consumidores.txt";
+        private string strPathFileTempTxt = @"C:/Users/Admin/Source/Repos/Trabalho_2Periodo/Trabalho Interdisciplinar/Trabalho Interdisciplinar/Contagem/Leonardo_Pedro_Luiz_Fabricio/MVC_Model/Arquivo/Bloco_de_Notas/Consumidor/Consumidor.tmp";
+        private string strPathFileTempXml = @"C:/Users/Admin/Source/Repos/Trabalho_2Periodo/Trabalho Interdisciplinar/Trabalho Interdisciplinar/Contagem/Leonardo_Pedro_Luiz_Fabricio/MVC_Model/Arquivo/Xml/Cliente/Consumidor.tmp";
 
         //inicializador do form
         public frmPesquisarConsumidor()
@@ -123,7 +126,8 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             int flagPessoaEncontrada = 1;
             if (flagNome == 0 && flagCodigo == 0)//Se o usuario digitou o nome e o codigo então irá busca-lo
-                flagPessoaEncontrada = pesquisarConsumidor(Nome, Pessoa, codigo);
+                flagPessoaEncontrada = pesquisarConsumidorTxt(Nome, Pessoa, codigo);
+                //flagPessoaEncontrada = pesquisarConsumidorXml(Nome, Pessoa, codigo);
             //flagPessoaEncontrada=0-->O codigo foi encontrado e ja foi adicionado na lista
             //flagPessoaEncontrada=1-->O codigo não foi encontrado
 
@@ -131,7 +135,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             //Se algum dos flags for diferente de 0 irá aparecer uma mensagem respectiva
 
             if (flagNome == 0 && flagCodigo == 0 && flagPessoaEncontrada == 0)
-               Limpar();
+                Limpar();
             //se der tudo certo o campo nome e cpf/cnpj será limpo mas os resultados não
         }
         public int verfNome(ref string Nome)
@@ -205,36 +209,72 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
             return flagcodigo;
         }
-        public int pesquisarConsumidor(string Nome, string Pessoa, string codigo)
+        public int pesquisarConsumidorTxt(string nome, string pessoa, string codigo)
         {
             int flagPessoaEncontrada = 1;
-            using (StreamReader ler = new StreamReader(strPathFile))
+            PessoaDAO pesqPessoa = new PessoaDAO();
+            if (pessoa == "Pessoa Física")
+                flagPessoaEncontrada = pesqPessoa.pesquisaPesFis(nome, pessoa, codigo);
+            else
+                flagPessoaEncontrada = pesqPessoa.pesquisaPesJurid(nome, pessoa, codigo);
+            if (flagPessoaEncontrada == 0)
             {
-                string leitura1, leitura2, leitura3;
-                while (!ler.EndOfStream)
+                using (StreamReader ler = new StreamReader(strPathFileTempTxt))
                 {
-                    leitura1 = ler.ReadLine();//lê o nome
-                    leitura2 = ler.ReadLine();//pessoa
-                    leitura3 = ler.ReadLine();//codigo
-                    ler.ReadLine();//_________
-                    if (leitura1 != null && leitura2 != null && leitura3 != null)
-                    {//evita a falha do método StartsWith
-                        if (leitura1.Equals(Nome))//encontrou o nome
-                            if (leitura2.Equals(Pessoa))//encontrou a pessoa
-                                if (leitura3.Equals(codigo))//Encontrou o código(cpf/cnpj)
-                                {
-                                    flagPessoaEncontrada = 0;
-                                    ListViewItem lista = new ListViewItem(leitura1);
-                                    lista.SubItems.Add(leitura2);
-                                    lista.SubItems.Add(leitura3);
-                                    listViewResultadoConsum.Items.Add(lista);
-                                    //adiciona na view lista desejada(listViewResultadoConsum) os itens leitura1...2..3
-                                }
+
+                    while (!ler.EndOfStream)
+                    {
+                        string leitura1 = ler.ReadLine();//lê o nome
+                        string leitura2 = ler.ReadLine();//pessoa
+                        string leitura3 = ler.ReadLine();//codigo
+                                                         //escrever na lista
+                        ListViewItem lista = new ListViewItem(leitura1);
+                        lista.SubItems.Add(leitura2);
+                        lista.SubItems.Add(leitura3);
+                        listViewResultadoConsum.Items.Add(lista);
+                        //adiciona na view lista desejada(listViewResultadoConsum) os itens leitura1...2..3
                     }
+
                 }
             }
+            pesqPessoa.apagarArqTemp();
             return flagPessoaEncontrada;
         }
+        public int pesquisarConsumidorXml(string nome, string pessoa, string codigo)
+        {
+            int flagPessoaEncontrada = 1;
+            PessoaFisicaDAO objPessoaFis = new PessoaFisicaDAO();
+            PessoaJuridicaDAO objPessoaJur = new PessoaJuridicaDAO();
+
+            if (pessoa == "Pessoa Física")
+                flagPessoaEncontrada = objPessoaFis.pesqPessoaFis(nome, pessoa, codigo);//(nome, pessoa, codigo);
+            else
+                flagPessoaEncontrada = objPessoaJur.pesqPessoaJur(nome,pessoa,codigo);//(nome, pessoa, codigo);
+            if (flagPessoaEncontrada == 0)
+            {
+                using (StreamReader ler = new StreamReader(strPathFileTempXml))
+                {
+
+                    while (!ler.EndOfStream)
+                    {
+                        string leitura1 = ler.ReadLine();//lê o nome
+                        string leitura2 = ler.ReadLine();//pessoa
+                        string leitura3 = ler.ReadLine();//codigo
+                        //escreve na lista
+                        ListViewItem lista = new ListViewItem(leitura1);
+                        lista.SubItems.Add(leitura2);
+                        lista.SubItems.Add(leitura3);
+                        listViewResultadoConsum.Items.Add(lista);
+                        //adiciona na view lista desejada(listViewResultadoConsum) os itens leitura1...2..3
+                    }
+
+                }
+            }
+            objPessoaJur.apagarArqTemp();
+            //o arquivo temporario para ambas as pessoas é o mesmo endereço. Logo se uma pessoa apagar ela apaga para as duas
+            return flagPessoaEncontrada;
+        }
+
         private void mensagemErro(int flagNome, double flagCodigo, int flagPessoaEncontrada)
         {
             //flagNome==0 &&flagCodigo==0--->procura o consumidor 

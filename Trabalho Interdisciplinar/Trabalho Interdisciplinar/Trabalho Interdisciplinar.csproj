@@ -57,10 +57,12 @@
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Controller\Classes\Tarifa\TarifaComercial.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Controller\Classes\Tarifa\TarifaResidencial.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\Banco_de_Dados\DAL.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\Bloco_de_Notas\Consumidor\PessoaDAO.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\Bloco_de_Notas\Conta\ContaDAO.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\XML\Consumidor\PessoaFisicaDAO.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\XML\Consumidor\PessoaJuridicaDAO.cs" />
-    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\XML\Conta\ContaComercialDAO.cs" />
-    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\XML\Conta\ContaResidencialDAO.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\XML\Contas\ContaComercialDAO.cs" />
+    <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\DAL\XML\Contas\ContaResidencialDAO.cs" />
     <Compile Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_View\Cliente\frmCadastrar_Consumidor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,9 +133,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Bloco_de_Notas\Consumidores.txt" />
-    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Bloco_de_Notas\Contas.txt" />
+    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Bloco_de_Notas\Consumidor\PessoaFisica.txt" />
+    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Bloco_de_Notas\Consumidor\PessoaJuridica.txt" />
+    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Bloco_de_Notas\Contas\ContaComercial.txt" />
+    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Bloco_de_Notas\Contas\ContaResidencial.txt" />
     <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Xml\Cliente\PessoaFisica.xml" />
+    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Xml\Cliente\PessoaJuridica.xml" />
+    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Xml\Contas\ContaComercial.xml" />
+    <Content Include="Contagem\Leonardo_Pedro_Luiz_Fabricio\MVC_Model\Arquivo\Xml\Contas\ContaResidencial.xml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

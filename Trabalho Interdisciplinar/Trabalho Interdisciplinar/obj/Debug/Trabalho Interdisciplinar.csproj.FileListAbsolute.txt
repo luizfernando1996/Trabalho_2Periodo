@@ -34,3 +34,15 @@ C:\Users\Admin\Desktop\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\D
 C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\Trabalho Interdisciplinar.exe.config
 C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.exe
 C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.pdb
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\Trabalho Interdisciplinar.exe
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\Trabalho Interdisciplinar.pdb
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\MySql.Data.dll
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\bin\Debug\MySql.Data.xml
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Cliente.frmCadastrar_Consumidor.resources
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Cliente.frmPesquisarConsumidor.resources
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Conta.frmCadastrarConta.resources
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_View.Conta.frmPesquisarConta.resources
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Form1.resources
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho_Interdisciplinar.Properties.Resources.resources
+C:\Users\Admin\Source\Repos\Trabalho_2Periodo\Trabalho Interdisciplinar\Trabalho Interdisciplinar\obj\Debug\Trabalho Interdisciplinar.csproj.GenerateResource.Cache

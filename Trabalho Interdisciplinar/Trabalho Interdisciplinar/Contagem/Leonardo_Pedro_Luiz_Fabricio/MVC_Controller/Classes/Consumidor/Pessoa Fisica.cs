@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Consumidor
 {
-    public class Pessoa_Fisica:Consumidor
+    public class Pessoa_Fisica : Consumidor//public para serializar
     {
         //atributos
         private string cpf_PessoaF;
@@ -43,9 +43,9 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Co
         //construtor
         public Pessoa_Fisica(string nome, string cpf_PessoaF)
         {
-           nome_AtrbConsumidor=nome;
-           this.cpf_PessoaF = cpf_PessoaF;
-       }
+            nome_MtdPessoaF = nome;
+            this.cpf_PessoaF = cpf_PessoaF;
+        }
         public Pessoa_Fisica() { }//para o arquivo XML
 
 

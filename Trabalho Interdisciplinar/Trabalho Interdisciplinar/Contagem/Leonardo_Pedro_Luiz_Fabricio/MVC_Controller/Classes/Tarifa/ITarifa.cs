@@ -7,7 +7,7 @@ using Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Contro
 
 namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Controller.Classes.Tarifa
 {
-    interface ITarifa
+    public interface ITarifa
     {
         double tarifaConta(BaseConta trf);
     }
