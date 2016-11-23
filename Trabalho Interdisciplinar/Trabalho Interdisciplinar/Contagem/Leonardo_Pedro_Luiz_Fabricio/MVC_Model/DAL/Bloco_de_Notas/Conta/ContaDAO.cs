@@ -74,6 +74,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Mo
         }
         public int pesquisarContaRes(string codigo)
         {
+            int flagCodigoEncontrado = 1;
             using (FileStream arq = new FileStream(strPathFileTemp, FileMode.Create))
             {
                 using (StreamWriter escrever = new StreamWriter(arq))

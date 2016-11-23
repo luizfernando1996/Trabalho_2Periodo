@@ -23,6 +23,7 @@ namespace Trabalho_Interdisciplinar
         //eventos de transição de janelas
         private void menu_Consumidor_Cadastrar_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("Oi");
             frmCadastrar_Consumidor tela = new frmCadastrar_Consumidor();
             tela.ShowDialog();
         }

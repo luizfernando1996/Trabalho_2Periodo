@@ -24,6 +24,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Co
                 nome_AtrbConsumidor = value;
             }
         }
+        
         public string cnpj_MtdPessoaJ
         {
             get

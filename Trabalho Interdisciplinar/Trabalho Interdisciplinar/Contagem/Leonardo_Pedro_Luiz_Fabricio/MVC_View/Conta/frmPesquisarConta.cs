@@ -73,7 +73,31 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         }
         private void btnPesquisar_Click(object sender, EventArgs e)
         {
-            Pesquisar();
+            pesquisar();
+        }
+        private void checkBox1_Click(object sender, EventArgs e)
+        {
+            checkBox1.Checked = true;
+            if (checkBox1.Checked)
+                checkBox2.Checked = false;
+        }
+        private void checkBox2_Click(object sender, EventArgs e)
+        {
+            checkBox2.Checked = true;
+            if (checkBox2.Checked)
+                checkBox1.Checked = false;
+        }
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            int arq;
+            if (checkBox1.Checked)
+                arq = 1;
+            else
+                arq = 2;
+            pesquisarArq(arq);
+            pictureBox1.Visible = false;
+            checkBox1.Visible = false;
+            checkBox2.Visible = false;
         }
 
         //------------------métodos
@@ -83,7 +107,29 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             txtMskCPF.Clear();
             listViewResultadoConta.Items.Clear();
         }
-        private void Pesquisar()
+        private void pesquisar()
+        {
+            string pessoa = null;
+            pessoa = verfPessoa();
+
+            string codigo = null;
+            int flagCodigo = 1;
+            flagCodigo = verfCod(ref codigo);
+            //flagcodigo=0-->O codigo foi digitado e a variavel codigo está com ele
+            //flagcodigo=1-->O cpf não foi digitado
+            //flagcodigo=2-->O cnpj não foi digitado
+
+
+            int erro = mensagemErro(flagCodigo);
+            //imprime uma mensagem se houver algum erro que somente ocorrera se alguma flag não conter 0
+            if (erro == 0)
+            {
+                pictureBox1.Visible = true;
+                checkBox1.Visible = true;
+                checkBox2.Visible = true;
+            }
+        }
+        private void pesquisarArq(int arq)
         {
             string pessoa = null;
             pessoa = verfPessoa();
@@ -98,9 +144,12 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             int flagCodigoEncontrado = 1;
             if (flagCodigo == 0)//só pesquisa se o usuario digitar um cpf ou cnpj
-            //flagCodigoEncontrado = pesquisaContaTxt(pessoa, codigo);
-           //flagCodigoEncontrado = pesquisaContaXml(pessoa, codigo);
-                flagCodigoEncontrado = pesquisaContaBanco(pessoa, codigo);
+                if (arq == 1)
+                    flagCodigoEncontrado = pesquisaContaXml(pessoa, codigo);
+                else
+                    flagCodigoEncontrado = pesquisaContaTxt(pessoa, codigo);
+
+            //flagCodigoEncontrado = pesquisaContaBanco(pessoa, codigo);
 
             //flagcodigoencontrado=0-->O codigo foi encontrado
             //flagcodigoencontrado=1-->O codigo não foi encontrado
@@ -143,6 +192,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
             return flagcodigo;
         }
+        //<model>
         private int pesquisaContaTxt(string pessoa, string codigo)
         {
             ContaDAO cntDAO = new ContaDAO();
@@ -224,16 +274,28 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             return flagCodigoEncontrado;
         }
+        //</model>
+        private int mensagemErro(int flagcodigo)
+        {
+            int erro = 0;
+            if (flagcodigo == 1)
+            {
+                MessageBox.Show("Informe o cpf");
+                erro = 1;
+            }
+            else if (flagcodigo == 2)
+            {
+                MessageBox.Show("Informe o cnpj");
+                erro = 1;
+            }
+            return erro;
+        }
         private void mensagemErro(int flagcodigoencontrado, int flagcodigo)
         {
             if (flagcodigoencontrado == 1 && flagcodigo == 0)
             {
                 MessageBox.Show("Não foram encontrados resultados para este código");
             }
-            else if (flagcodigoencontrado == 1 && flagcodigo == 1)
-                MessageBox.Show("Informe o cpf");
-            else if (flagcodigoencontrado == 1 && flagcodigo == 2)
-                MessageBox.Show("Informe o cnpj");
         }
     }
 }

@@ -70,6 +70,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
                 lblCPF.Visible = false;
             }
         }
+        
         //buttons
         private void btnLimpar_Click(object sender, EventArgs e)
         {
@@ -80,7 +81,20 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         }
         private void btnPesquisar_Click(object sender, EventArgs e)
         {
-            Pesquisar();
+            pesquisar();
+        }
+        private void checkBox1_Click(object sender, EventArgs e)
+        {
+            checkBox1.Checked = true;
+            if (checkBox1.Checked)
+                checkBox2.Checked = false;
+        }
+
+        private void checkBox2_Click(object sender, EventArgs e)
+        {
+            checkBox2.Checked = true;
+            if (checkBox2.Checked)
+                checkBox1.Checked = false;
         }
         private void txtNome_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -94,21 +108,59 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             ////65 - 90--maiusculo
             ////Keys
         }
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            int arq;
+            if (checkBox1.Checked)
+                arq = 1;
+            else
+                arq = 2;
+            pesquisarArq(arq);
+            pictureBox1.Visible = false;
+            checkBox1.Visible = false;
+            checkBox2.Visible = false;
+        }
         //mskBox
         private void txtMskCPF_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
-                Pesquisar();
+                pesquisar();
         }
         private void txtMskCNPJ_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
-                Pesquisar();
+                pesquisar();
         }
 
 
         //------------------métodos
-        public void Pesquisar()
+        public void pesquisar()
+        {
+            string Nome = null;
+            flagNome = verfNome(ref Nome);
+            //flagNome=0-->O nome foi digitado e se encontra na variavel Nome
+            //flagNome=1-->O nome não foi digitado
+            //flagNome=2-->O nome contem caracteres que não são letras
+
+            string Pessoa = verfPessoa();
+            //Pessoa--->Atribui a Pessoa a string Pessoa Jurídica ou Pessoa Física
+
+            string codigo = null;
+            double flagCodigo = verfCod(ref codigo);
+            //flagcodigo=0-->O codigo foi digitado e ele se encontra na variavel codigo
+            //flagcodigo=1-->O cpf não foi digitado
+            //flagcodigo=2-->O cnpj não foi digitado
+
+            int erro = mensagemErro(flagNome, flagCodigo);
+            //imprime uma mensagem se houver algum erro que somente ocorrera se alguma flag não conter 0
+            if (erro == 0)
+            {
+                pictureBox1.Visible = true;
+                checkBox1.Visible = true;
+                checkBox2.Visible = true;
+            }
+        }
+        public void pesquisarArq(int arq)
         {
             string Nome = null;
             flagNome = verfNome(ref Nome);
@@ -127,12 +179,15 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             int flagPessoaEncontrada = 1;
             if (flagNome == 0 && flagCodigo == 0)//Se o usuario digitou o nome e o codigo então irá busca-lo
-                //flagPessoaEncontrada = pesquisarConsumidorTxt(Nome, Pessoa, codigo);
-                //flagPessoaEncontrada = pesquisarConsumidorXml(Nome, Pessoa, codigo);
-                flagPessoaEncontrada = pesquisarConsumidorBanco(Nome, Pessoa, codigo);
+                if (arq == 1)
+                    flagPessoaEncontrada = pesquisarConsumidorXml(Nome, Pessoa, codigo);
+                else
+                    flagPessoaEncontrada = pesquisarConsumidorTxt(Nome, Pessoa, codigo);
 
             //flagPessoaEncontrada=0-->O codigo foi encontrado e ja foi adicionado na lista
             //flagPessoaEncontrada=1-->O codigo não foi encontrado
+
+            //flagPessoaEncontrada = pesquisarConsumidorBanco(Nome, Pessoa, codigo);
 
             mensagemErro(flagNome, flagCodigo, flagPessoaEncontrada);
             //Se algum dos flags for diferente de 0 irá aparecer uma mensagem respectiva
@@ -253,7 +308,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             if (pessoa == "Pessoa Física")
                 flagPessoaEncontrada = objPessoaFis.pesqPessoaFis(nome, pessoa, codigo);//(nome, pessoa, codigo);
             else
-                flagPessoaEncontrada = objPessoaJur.pesqPessoaJur(nome,pessoa,codigo);//(nome, pessoa, codigo);
+                flagPessoaEncontrada = objPessoaJur.pesqPessoaJur(nome, pessoa, codigo);//(nome, pessoa, codigo);
             if (flagPessoaEncontrada == 0)
             {
                 using (StreamReader ler = new StreamReader(strPathFileTempXml))
@@ -306,29 +361,61 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
             return flagPessoaEncontrada;
         }
+        private int mensagemErro(int flagNome, double flagCodigo)
+        {
+            int erro = 0;
+            if (flagNome == 0 && flagCodigo == 1)
+            {
+                MessageBox.Show("Informe o cpf do cliente");
+                erro = 1;
+            }
+            else if (flagNome == 0 && flagCodigo == 1.1)
+            {
+                MessageBox.Show("Informe todo o cpf do cliente (11 digitos)");
+                erro = 1;
+            }
+            else if ((flagNome == 0 && flagCodigo == 2))
+            {
+                MessageBox.Show("Informe o cnpj do cliente");
+                erro = 1;
+            }
+            else if (flagNome == 0 && flagCodigo == 2.1)
+            {
+                MessageBox.Show("Informe todo o cnpj do cliente (14digitos)");
+                erro = 1;
+            }
+            else if (flagNome == 1 && flagCodigo == 0)
+            {
+                MessageBox.Show("Informe o nome do cliente");
+                erro = 1;
+            }
+            else if (flagNome == 1 && flagCodigo == 1)
+            {
+                MessageBox.Show("Informe o nome e cpf do cliente");
+                erro = 1;
+            }
+            else if (flagNome == 1 && flagCodigo == 1.1)
+            {
+                MessageBox.Show("Informe o nome e todo o cpf do cliente (11 digitos)");
+                erro = 1;
+            }
+            else if (flagNome == 1 && flagCodigo == 2)
+            {
+                MessageBox.Show("Informe o nome e cnpj do cliente");
+                erro = 1;
+            }
+            else if (flagNome == 1 && flagCodigo == 2.1)
+            {
+                MessageBox.Show("Informe o nome e todo o cnpj do cliente (14digitos)");
+                erro = 1;
+            }
+            return erro;
+        }
         private void mensagemErro(int flagNome, double flagCodigo, int flagPessoaEncontrada)
         {
             //flagNome==0 &&flagCodigo==0--->procura o consumidor 
             if ((flagCodigo == 0) && (flagNome == 0) && flagPessoaEncontrada == 1)
                 MessageBox.Show("Não foi encontrado este consumidor!");
-            else if (flagNome == 0 && flagCodigo == 1)
-                MessageBox.Show("Informe o cpf do cliente");
-            else if (flagNome == 0 && flagCodigo == 1.1)
-                MessageBox.Show("Informe todo o cpf do cliente (11 digitos)");
-            else if ((flagNome == 0 && flagCodigo == 2))
-                MessageBox.Show("Informe o cnpj do cliente");
-            else if (flagNome == 0 && flagCodigo == 2.1)
-                MessageBox.Show("Informe todo o cnpj do cliente (14digitos)");
-            else if (flagNome == 1 && flagCodigo == 0)
-                MessageBox.Show("Informe o nome do cliente");
-            else if (flagNome == 1 && flagCodigo == 1)
-                MessageBox.Show("Informe o nome e cpf do cliente");
-            else if (flagNome == 1 && flagCodigo == 1.1)
-                MessageBox.Show("Informe o nome e todo o cpf do cliente (11 digitos)");
-            else if (flagNome == 1 && flagCodigo == 2)
-                MessageBox.Show("Informe o nome e cnpj do cliente");
-            else if (flagNome == 1 && flagCodigo == 2.1)
-                MessageBox.Show("Informe o nome e todo o cnpj do cliente (14digitos)");
             //else if (flagNome == 2)
             //{
             //    MessageBox.Show("Insira no campo nome apenas letras");

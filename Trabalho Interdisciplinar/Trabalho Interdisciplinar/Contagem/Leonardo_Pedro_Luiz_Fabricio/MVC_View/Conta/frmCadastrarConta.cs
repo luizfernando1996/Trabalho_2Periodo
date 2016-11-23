@@ -82,7 +82,31 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         }
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
-            Cadastrar();
+            cadastrar();
+        }
+        private void checkBox1_Click(object sender, EventArgs e)
+        {
+            checkBox1.Checked = true;
+            if (checkBox1.Checked)
+                checkBox2.Checked = false;
+        }
+        private void checkBox2_Click(object sender, EventArgs e)
+        {
+            checkBox2.Checked = true;
+            if (checkBox2.Checked)
+                checkBox1.Checked = false;
+        }
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            int arq;
+            if (checkBox1.Checked)
+                arq = 1;
+            else
+                arq = 2;
+            cadastrarArq(arq);
+            pictureBox1.Visible = false;
+            checkBox1.Visible = false;
+            checkBox2.Visible = false;
         }
 
         //------------------métodos
@@ -93,7 +117,44 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             txtLeituraAnterior.Clear();
             txtLeituraAtual.Clear();
         }
-        public void Cadastrar()
+        private void cadastrar()
+        {
+            string pessoa = verfPessoa();
+            //Pessoa--->Atribui a Pessoa a string Pessoa Jurídica ou Pessoa Física
+
+            string codigo = null;
+            int flagCodigo = 0;
+            flagCodigo = verfDigitouCpf_Cnpj(ref codigo);
+            //Valor 0---> Foi informado o codigo e ele se encontra em codigo
+            //Valor 1---> Não foi informado cpf
+            //Valor 2---> Não foi informado cnpj
+
+            int flagLeitura = 0;
+            double leituraAtual = 0, leituraAnterior = 0;
+            flagLeitura = verfLeitura(ref leituraAnterior, ref leituraAtual);
+            //Valor 0--->Ambos os campos foram preenchidos e os seus valores se encontram em leituraAtual e leituraAnterior
+            //Valor 1--->O campo Leitura Atual não foi preenchido
+            //Valor 2--->O campo Leitura Anterior não foi preenchido
+            //Valor 3--->Ambos os campos não foram preenchidos
+            //Valor 4--->Algum dos campos não foi preenchido com números
+
+            int flagCodigoCadastrado = 1;
+            string nomeLido = null;
+            if (flagCodigo == 0)
+                flagCodigoCadastrado = procuraCodigoTxt(ref nomeLido, pessoa, codigo);
+            //flagcodigocadastrado=0---> O cliente foi cadastrado
+            //flagcodigocadastrado=1---> O cliente ainda não foi cadastrado
+            int erro = 0;
+            erro = confErroSeHouverInforma(flagCodigo, flagLeitura, flagCodigoCadastrado);
+            //imprime uma mensagem se houver algum erro que somente ocorrera se alguma flag não conter 0
+            if (erro == 0)
+            {
+                pictureBox1.Visible = true;
+                checkBox1.Visible = true;
+                checkBox2.Visible = true;
+            }
+        }
+        public void cadastrarArq(int arq)
         {
             string pessoa = verfPessoa();
             //Pessoa--->Atribui a Pessoa a string Pessoa Jurídica ou Pessoa Física
@@ -125,11 +186,13 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             //Se flagcodigocadastrado=0 então flagCodigo=0
             {
                 double num = sincroniaConta_Consumidor(pessoa, codigo, nomeLido, leituraAtual, leituraAnterior);
-                //cadastrarContaTxt(pessoa, codigo, leituraAtual, leituraAnterior, num);
-                //cadastrarContaXml(pessoa, codigo, leituraAtual, leituraAnterior, num);
-                cadastrarContaBanco(pessoa,codigo,leituraAtual,leituraAnterior,num);
+                if (arq == 1)
+                    cadastrarContaXml(pessoa, codigo, leituraAtual, leituraAnterior, num);
+                else
+                    cadastrarContaTxt(pessoa, codigo, leituraAtual, leituraAnterior, num);
+
+                //cadastrarContaBanco(pessoa, codigo, leituraAtual, leituraAnterior, num);
             }
-            mensagemErro(flagCodigo, flagLeitura, flagcodigocadastrado);
         }
         public string verfPessoa()
         {
@@ -319,7 +382,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
                 if (pessoa == "Pessoa Física")
                 {
                     objPessoaFis.conectar();
-                    num=Math.Round(num, 2);//valor final da conta arredondada para 2 casas decimais
+                    num = Math.Round(num, 2);//valor final da conta arredondada para 2 casas decimais
 
                     string leituraAtual1 = "Leitura Atual: " + leituraAtual;
                     string leituraAnterior1 = "Leitura Anterior: " + leituraAnterior;
@@ -333,9 +396,9 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
                     objPessoaJur.conectar();
                     num = Math.Round(num, 2);//valor final da conta arredondada para 2 casas decimais
 
-                    string leituraAtual1="Leitura Atual: " + leituraAtual;
+                    string leituraAtual1 = "Leitura Atual: " + leituraAtual;
                     string leituraAnterior1 = "Leitura Anterior: " + leituraAnterior;
-                    string num1="R$: "+ num;
+                    string num1 = "R$: " + num;
                     objPessoaJur.inserir(codigo, leituraAtual1, leituraAnterior1, num1);
                     MessageBox.Show("Conta cadastrada com sucesso no banco de dados");
                 }
@@ -346,50 +409,100 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
         }
         //</persistencia>
-
-        public void mensagemErro(int flagCodigo, int flagLeitura, int flagPessoaEncontrada)
+        public int confErroSeHouverInforma(int flagCodigo, int flagLeitura, int flagPessoaEncontrada)
         {
+            int erro = 0;
+
             //17 combinações possiveis-->16 +1
             //flagCodigo==0&&flagLeitura==0&&flagPessoaEncontrada==0-->Cliente cadastrado
             if (flagCodigo == 0 && flagLeitura == 0 && flagPessoaEncontrada == 1)
+            {
                 MessageBox.Show("Cliente não cadastrado");
+                erro = 1;
+            }
             else if (flagCodigo == 0 && flagLeitura == 1 && flagPessoaEncontrada == 0)
+            {
                 MessageBox.Show("Informe a leitura atual");
+                erro = 1;
+            }
             else if (flagCodigo == 0 && flagLeitura == 1 && flagPessoaEncontrada == 1)
+            {
                 MessageBox.Show("Informe a leitura atual e o cliente não está cadastrado");
+                erro = 1;
+            }
             else if (flagCodigo == 0 && flagLeitura == 2 && flagPessoaEncontrada == 0)
+            {
                 MessageBox.Show("Informe a leitura anterior");
+                erro = 1;
+            }
             else if (flagCodigo == 0 && flagLeitura == 2 && flagPessoaEncontrada == 1)
+            {
                 MessageBox.Show("Informe a leitura anterior e o cliente não está cadastrado");
+                erro = 1;
+            }
             else if (flagCodigo == 0 && flagLeitura == 3 && flagPessoaEncontrada == 0)
+            {
                 MessageBox.Show("Informe ambas as leituras");
+                erro = 1;
+            }
             else if (flagCodigo == 0 && flagLeitura == 3 && flagPessoaEncontrada == 1)
+            {
                 MessageBox.Show("Informe ambas as leituras e o cliente não está cadastrado");
+                erro = 1;
+            }
             //sempre que flagPessoaEncontrada==0-->flagCodigo=0
             else if (flagCodigo == 1 && flagLeitura == 0)
+            {
                 MessageBox.Show("Informe o cpf");
+                erro = 1;
+            }
             else if (flagCodigo == 1 && flagLeitura == 1)
+            {
                 MessageBox.Show("Informe o cpf e a leitura Atual");
+                erro = 1;
+            }
             else if (flagCodigo == 1 && flagLeitura == 2)
+            {
                 MessageBox.Show("Informe o cpf e a leitura anterior");
+                erro = 1;
+            }
             else if (flagCodigo == 1 && flagLeitura == 3)
+            {
+
                 MessageBox.Show("Informe o cpf e ambas as leituras");
+                erro = 1;
+            }
             else if (flagCodigo == 2 && flagLeitura == 0)
+            {
                 MessageBox.Show("Informe o cnpj");
+                erro = 1;
+            }
             else if (flagCodigo == 2 && flagLeitura == 1)
+            {
                 MessageBox.Show("Informe o cnpj e a leitura atual");
+                erro = 1;
+            }
             else if (flagCodigo == 2 && flagLeitura == 2)
+            {
                 MessageBox.Show("Informe o cnpj e a leitura anterior");
+                erro = 1;
+            }
             else if (flagCodigo == 2 && flagLeitura == 3)
+            {
                 MessageBox.Show("Informe o cnpj e ambas as leituras");
+                erro = 1;
+            }
             else if (flagLeitura == 4)
             {
-                MessageBox.Show("Os valores informados em leitura só podem ser números");
-                MessageBox.Show("Conta não cadastrada");
+                {
+                    MessageBox.Show("Os valores informados em leitura só podem ser números");
+                    MessageBox.Show("Conta não cadastrada");
+                    erro = 1;
+                }
             }
+            return erro;
         }
+
     }
-
-
 }
 

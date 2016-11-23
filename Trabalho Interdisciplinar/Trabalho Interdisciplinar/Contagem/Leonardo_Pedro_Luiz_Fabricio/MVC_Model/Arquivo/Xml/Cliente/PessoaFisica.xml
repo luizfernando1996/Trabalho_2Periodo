@@ -28,4 +28,8 @@
     <nome_MtdPessoaF>IUY</nome_MtdPessoaF>
     <cpf_MtdPessoaF>CPF: 111,111,111-11</cpf_MtdPessoaF>
   </Pessoa_Fisica>
+  <Pessoa_Fisica>
+    <nome_MtdPessoaF>AS</nome_MtdPessoaF>
+    <cpf_MtdPessoaF>CPF: 111,111,111-11</cpf_MtdPessoaF>
+  </Pessoa_Fisica>
 </ArrayOfPessoa_Fisica>

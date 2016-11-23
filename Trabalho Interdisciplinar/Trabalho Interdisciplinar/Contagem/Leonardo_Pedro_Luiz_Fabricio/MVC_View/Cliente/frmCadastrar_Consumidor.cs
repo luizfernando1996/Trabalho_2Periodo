@@ -70,6 +70,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
                 lblCPF.Visible = false;
             }
         }
+
         //buttons
         private void btnLimpar_Click(object sender, EventArgs e)
         {
@@ -77,39 +78,85 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         }
         private void btnCadastrar_Click(object sender, EventArgs e)
         {
-            cadastrarArqTxt();
+            cadastrar();
+        }
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            int arq;
+            if (checkBox1.Checked)
+                arq = 1;
+            else
+                arq = 2;
+            cadastrarArq(arq);
+            pictureBox1.Visible = false;
+            checkBox1.Visible = false;
+            checkBox2.Visible = false;
 
         }
-        //textbox
-        private void txtNome_KeyPress(object sender, KeyPressEventArgs e)
+        private void checkBox1_Click(object sender, EventArgs e)
         {
-            //if ((e.KeyChar!=8)&&(e.KeyChar < 65) || (e.KeyChar > 90 && e.KeyChar < 97) || (e.KeyChar > 122)&&(e.KeyChar!=231))
-            //{
-            //    e.Handled = true;
-            //    flagNome = 2;
-            //}
-            //else
-            //    e.Handled = false;
-            ////65 as 90 são os valores de A até Z
-            ////97--122--minusculo
-            ////8 = <--
-            ////231==ç
-            ////Keys//-->apertar f12 no keys que você encontra os codigos
+            checkBox1.Checked = true;
+            if (checkBox1.Checked)
+                checkBox2.Checked = false;
         }
+        private void checkBox2_Click(object sender, EventArgs e)
+        {
+            checkBox2.Checked = true;
+            if (checkBox2.Checked)
+                checkBox1.Checked = false;
+        }
+        //textbox
+        //private void txtNome_KeyPress(object sender, KeyPressEventArgs e)
+        //{
+        //    if ((e.KeyChar != 8) && (e.KeyChar < 65) || (e.KeyChar > 90 && e.KeyChar < 97) || (e.KeyChar > 122) && (e.KeyChar != 231))
+        //    {
+        //        e.Handled = true;
+        //        flagNome = 2;
+        //    }
+        //    else
+        //        e.Handled = false;
+        //    //65 as 90 são os valores de A até Z
+        //    //97--122--minusculo
+        //    //8 = <--
+        //    //231==ç
+        //    //Keys//-->apertar f12 no keys que você encontra os codigos
+        //}
         //mskBox
         private void txtMskCPF_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
-                cadastrarArqTxt();
+                cadastrar();
         }
         private void txtMskCNPJ_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == 13)
-                cadastrarArqTxt();
+                cadastrar();
         }
 
         //------------------métodos
-        private void cadastrarArqTxt()
+        private void cadastrar()
+        {
+            string nome = "a";
+            flagNome = verfNome(ref nome);
+            //flagnome=0-->O nome foi digitado e se encontra em Nome
+            //flagnome=1-->O nome não foi digitado
+            //flagnome=2-->O nome possui caracteres que não são letras
+
+            string codigo = null;
+            double flagcodigo = verfCod(ref codigo);
+            //flagcodigo=0-->O codigo foi digitado e ele se encontra na variavel codigo
+            //flagcodigo=1-->O cpf não foi digitado
+            //flagcodigo=2-->O cnpj não foi digitado
+            int erro = confErroSeHouverInforma(flagNome, flagcodigo);
+            //imprime uma mensagem se houver algum erro que somente ocorrera se alguma flag não conter 0
+            if (erro == 0)
+            {
+                pictureBox1.Visible = true;
+                checkBox1.Visible = true;
+                checkBox2.Visible = true;
+            }
+        }
+        private void cadastrarArq(int arquivo)
         {
             //flags
             double flagcodigo = 0;
@@ -131,12 +178,14 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             if (flagNome == 0 && flagcodigo == 0)//escreve no arquivo se as duas flags forem 0
             {
-                //escrArqBlocoNotas(nome, pessoa, codigo);
-                //escreverArqXml(nome, pessoa, codigo);
-                escreverArqBanco(nome, pessoa, codigo);
+                if(arquivo==1)
+                    escreverArqXml(nome, pessoa, codigo);
+                else
+                    escrArqBlocoNotas(nome, pessoa, codigo);
+                //escreverArqBanco(nome, pessoa, codigo);
                 Limpar();
             }
-            mensagemErro(flagNome, flagcodigo);//imprime uma mensagem se alguma flag não conter 0
+            confErroSeHouverInforma(flagNome, flagcodigo);
 
         }
         private int verfNome(ref string nome)
@@ -275,27 +324,55 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         }
         /// </MODEL>
 
-        private void mensagemErro(int flagNome, double flagcodigo)
+        private int confErroSeHouverInforma(int flagNome, double flagcodigo)
         {
+            int erro = 0;
             //flagNome==0&& flagcodigo==0--->escreve no arquivo e la mostra a mensagem Sucesso
             if (flagNome == 0 && flagcodigo == 1)
+            {
                 MessageBox.Show("Informe o cpf");
+                erro = 1;
+            }
             else if (flagNome == 0 && flagcodigo == 1.1)
+            {
                 MessageBox.Show("Informe todo o cpf(11 digitos)");
+                erro = 1;
+            }
             else if (flagNome == 0 && flagcodigo == 2)
+            {
                 MessageBox.Show("Informe o cnpj");
+                erro = 1;
+            }
             else if (flagNome == 0 && flagcodigo == 2.1)
+            {
                 MessageBox.Show("Informe todo o cnpj(14digitos)");
+                erro = 1;
+            }
             else if (flagNome == 1 && flagcodigo == 0)
+            {
                 MessageBox.Show("Informe o nome");
+                erro = 1;
+            }
             else if (flagNome == 1 && flagcodigo == 1)
+            {
                 MessageBox.Show("Informe o nome e o cpf");
+                erro = 1;
+            }
             else if (flagNome == 1 && flagcodigo == 1.1)
+            {
                 MessageBox.Show("Informe o nome e todo o cpf(11 digitos)");
+                erro = 1;
+            }
             else if (flagNome == 1 && flagcodigo == 2)
+            {
                 MessageBox.Show("Informe o nome e o cnpj");
+                erro = 1;
+            }
             else if (flagNome == 1 && flagcodigo == 2.1)
+            {
                 MessageBox.Show("Informe o nome e todo o cnpj(14digitos)");
+                erro = 1;
+            }
             //else if (flagNome == 2)
             //{
             //    MessageBox.Show("O campo nome só pode ter letras");
@@ -303,6 +380,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             //    //Codigo para que o programa após o digito de um numero, por exemplo, não repita 
             //    //a mensagem para outros nomes informados
             //}
+            return erro;
         }
         private void Limpar()
         {

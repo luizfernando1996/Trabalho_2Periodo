@@ -30,4 +30,10 @@
     <leituraAnterior_MtdConta>1</leituraAnterior_MtdConta>
     <tarifa_MtdContaResidencialXml>R$: 75,46</tarifa_MtdContaResidencialXml>
   </Conta_Residencial>
+  <Conta_Residencial>
+    <cpf>CPF: 111,111,111-11</cpf>
+    <leituraAtual_MtdConta>178</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>17</leituraAnterior_MtdConta>
+    <tarifa_MtdContaResidencialXml>R$: 95,74</tarifa_MtdContaResidencialXml>
+  </Conta_Residencial>
 </ArrayOfConta_Residencial>
