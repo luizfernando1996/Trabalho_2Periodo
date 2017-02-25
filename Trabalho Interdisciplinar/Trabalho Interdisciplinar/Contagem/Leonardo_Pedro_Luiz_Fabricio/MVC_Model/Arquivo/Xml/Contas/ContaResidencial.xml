@@ -36,4 +36,16 @@
     <leituraAnterior_MtdConta>17</leituraAnterior_MtdConta>
     <tarifa_MtdContaResidencialXml>R$: 95,74</tarifa_MtdContaResidencialXml>
   </Conta_Residencial>
+  <Conta_Residencial>
+    <cpf>CPF: 899,999,999-99</cpf>
+    <leituraAtual_MtdConta>150</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>10</leituraAnterior_MtdConta>
+    <tarifa_MtdContaResidencialXml>R$: 84,82</tarifa_MtdContaResidencialXml>
+  </Conta_Residencial>
+  <Conta_Residencial>
+    <cpf>CPF: 888,888,888-88</cpf>
+    <leituraAtual_MtdConta>150</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>10</leituraAnterior_MtdConta>
+    <tarifa_MtdContaResidencialXml>R$: 84,82</tarifa_MtdContaResidencialXml>
+  </Conta_Residencial>
 </ArrayOfConta_Residencial>

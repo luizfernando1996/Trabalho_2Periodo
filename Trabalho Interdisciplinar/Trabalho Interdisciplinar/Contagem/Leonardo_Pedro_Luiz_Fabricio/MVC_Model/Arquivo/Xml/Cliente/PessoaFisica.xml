@@ -32,4 +32,16 @@
     <nome_MtdPessoaF>AS</nome_MtdPessoaF>
     <cpf_MtdPessoaF>CPF: 111,111,111-11</cpf_MtdPessoaF>
   </Pessoa_Fisica>
+  <Pessoa_Fisica>
+    <nome_MtdPessoaF>LUCAS</nome_MtdPessoaF>
+    <cpf_MtdPessoaF>CPF: 899,999,999-99</cpf_MtdPessoaF>
+  </Pessoa_Fisica>
+  <Pessoa_Fisica>
+    <nome_MtdPessoaF>ASD</nome_MtdPessoaF>
+    <cpf_MtdPessoaF>CPF: 111,111,111-11</cpf_MtdPessoaF>
+  </Pessoa_Fisica>
+  <Pessoa_Fisica>
+    <nome_MtdPessoaF>FERN</nome_MtdPessoaF>
+    <cpf_MtdPessoaF>CPF: 222,222,222-22</cpf_MtdPessoaF>
+  </Pessoa_Fisica>
 </ArrayOfPessoa_Fisica>

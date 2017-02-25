@@ -136,17 +136,11 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         //------------------métodos
         private void cadastrar()
         {
-            string nome = "a";
-            flagNome = verfNome(ref nome);
-            //flagnome=0-->O nome foi digitado e se encontra em Nome
-            //flagnome=1-->O nome não foi digitado
-            //flagnome=2-->O nome possui caracteres que não são letras
+            double flagcodigo = 0;
+            string nome = "a", pessoa = "a", codigo = "b";
 
-            string codigo = null;
-            double flagcodigo = verfCod(ref codigo);
-            //flagcodigo=0-->O codigo foi digitado e ele se encontra na variavel codigo
-            //flagcodigo=1-->O cpf não foi digitado
-            //flagcodigo=2-->O cnpj não foi digitado
+            verificaTudo(ref flagcodigo, ref nome, ref flagNome, ref pessoa, ref codigo);
+
             int erro = confErroSeHouverInforma(flagNome, flagcodigo);
             //imprime uma mensagem se houver algum erro que somente ocorrera se alguma flag não conter 0
             if (erro == 0)
@@ -156,26 +150,31 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
                 checkBox2.Visible = true;
             }
         }
-        private void cadastrarArq(int arquivo)
-        {
-            //flags
-            double flagcodigo = 0;
+        private void verificaTudo(ref double flagcodigo,ref string nome,ref int flagNome,ref string pessoa,ref string codigo)
+        {             //flags
+            flagcodigo = 0;
 
-            string nome = "a";
+            nome = "a";
             flagNome = verfNome(ref nome);
             //flagnome=0-->O nome foi digitado e se encontra em Nome
             //flagnome=1-->O nome não foi digitado
             //flagnome=2-->O nome possui caracteres que não são letras
 
-            string pessoa = verfPessoa();
+            pessoa = verfPessoa();
             //Pessoa--->Atribui a Pessoa a string Pessoa Jurídica ou Pessoa Física
 
-            string codigo = null;
+            codigo = null;
             flagcodigo = verfCod(ref codigo);
             //flagcodigo=0-->O codigo foi digitado e ele se encontra na variavel codigo
             //flagcodigo=1-->O cpf não foi digitado
             //flagcodigo=2-->O cnpj não foi digitado
+        } 
+        private void cadastrarArq(int arquivo)
+        {
+            double flagcodigo = 0;
+            string nome = "a", pessoa = "a", codigo = "b";
 
+            verificaTudo(ref flagcodigo, ref nome, ref flagNome, ref pessoa, ref codigo);
             if (flagNome == 0 && flagcodigo == 0)//escreve no arquivo se as duas flags forem 0
             {
                 if(arquivo==1)
@@ -258,11 +257,11 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             return flagcodigo;
         }
 
-        //  <MODEL>
+        //  <persistencia>>
         private void escrArqBlocoNotas(string nome, string pessoa, string codigo)
         {
             PessoaDAO consDAO = new PessoaDAO();
-            if (pessoa == "Pessoa Fisica")
+            if (pessoa == "Pessoa Física")
                 consDAO.escreverPessoaFisica(nome, pessoa, codigo);
             else
                 consDAO.escreverPessoaJuridica(nome, pessoa, codigo);
@@ -322,7 +321,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             MessageBox.Show("Cliente cadastrado com sucesso no banco de dados");
 
         }
-        /// </MODEL>
+        /// </persistencia>
 
         private int confErroSeHouverInforma(int flagNome, double flagcodigo)
         {

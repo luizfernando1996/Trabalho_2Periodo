@@ -117,26 +117,34 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             txtLeituraAnterior.Clear();
             txtLeituraAtual.Clear();
         }
-        private void cadastrar()
+        public void verificaTudo(ref string pessoa, ref string codigo, ref int flagCodigo, ref int flagLeitura,ref double leituraAtual, ref double leituraAnterior)
         {
-            string pessoa = verfPessoa();
+            pessoa = verfPessoa();
             //Pessoa--->Atribui a Pessoa a string Pessoa Jurídica ou Pessoa Física
 
-            string codigo = null;
-            int flagCodigo = 0;
+            codigo = null;
+            flagCodigo = 0;
             flagCodigo = verfDigitouCpf_Cnpj(ref codigo);
             //Valor 0---> Foi informado o codigo e ele se encontra em codigo
             //Valor 1---> Não foi informado cpf
             //Valor 2---> Não foi informado cnpj
 
-            int flagLeitura = 0;
-            double leituraAtual = 0, leituraAnterior = 0;
+            flagLeitura = 0;
+            leituraAtual = 0;
+            leituraAnterior = 0;
             flagLeitura = verfLeitura(ref leituraAnterior, ref leituraAtual);
             //Valor 0--->Ambos os campos foram preenchidos e os seus valores se encontram em leituraAtual e leituraAnterior
             //Valor 1--->O campo Leitura Atual não foi preenchido
             //Valor 2--->O campo Leitura Anterior não foi preenchido
             //Valor 3--->Ambos os campos não foram preenchidos
             //Valor 4--->Algum dos campos não foi preenchido com números
+        }
+        private void cadastrar()
+        {
+            string pessoa = "a", codigo = "b";
+            int flagCodigo = 0,flagLeitura = 0;
+            double leituraAtual = 0, leituraAnterior = 0;
+            verificaTudo(ref pessoa, ref codigo, ref flagCodigo, ref flagLeitura, ref leituraAtual, ref leituraAnterior);
 
             int flagCodigoCadastrado = 1;
             string nomeLido = null;
@@ -156,24 +164,10 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         }
         public void cadastrarArq(int arq)
         {
-            string pessoa = verfPessoa();
-            //Pessoa--->Atribui a Pessoa a string Pessoa Jurídica ou Pessoa Física
-
-            string codigo = null;
-            int flagCodigo = 0;
-            flagCodigo = verfDigitouCpf_Cnpj(ref codigo);
-            //Valor 0---> Foi informado o codigo e ele se encontra em codigo
-            //Valor 1---> Não foi informado cpf
-            //Valor 2---> Não foi informado cnpj
-
-            int flagLeitura = 0;
+            string pessoa = "a", codigo = "b";
+            int flagCodigo = 0, flagLeitura = 0;
             double leituraAtual = 0, leituraAnterior = 0;
-            flagLeitura = verfLeitura(ref leituraAnterior, ref leituraAtual);
-            //Valor 0--->Ambos os campos foram preenchidos e os seus valores se encontram em leituraAtual e leituraAnterior
-            //Valor 1--->O campo Leitura Atual não foi preenchido
-            //Valor 2--->O campo Leitura Anterior não foi preenchido
-            //Valor 3--->Ambos os campos não foram preenchidos
-            //Valor 4--->Algum dos campos não foi preenchido com números
+            verificaTudo(ref pessoa, ref codigo, ref flagCodigo, ref flagLeitura, ref leituraAtual, ref leituraAnterior);
 
             int flagcodigocadastrado = 1;
             string nomeLido = null;
@@ -409,6 +403,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
         }
         //</persistencia>
+
         public int confErroSeHouverInforma(int flagCodigo, int flagLeitura, int flagPessoaEncontrada)
         {
             int erro = 0;

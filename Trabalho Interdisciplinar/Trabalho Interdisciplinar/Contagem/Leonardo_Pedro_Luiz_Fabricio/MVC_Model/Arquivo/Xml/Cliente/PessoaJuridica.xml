@@ -20,4 +20,8 @@
     <nome_MtdPessoaJ>EWQ</nome_MtdPessoaJ>
     <cnpj_MtdPessoaJ>CNPJ: 88,888,888/8888-88</cnpj_MtdPessoaJ>
   </Pessoa_Juridica>
+  <Pessoa_Juridica>
+    <nome_MtdPessoaJ>LUCAS</nome_MtdPessoaJ>
+    <cnpj_MtdPessoaJ>CNPJ: 98,888,888/8888-88</cnpj_MtdPessoaJ>
+  </Pessoa_Juridica>
 </ArrayOfPessoa_Juridica>

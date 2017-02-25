@@ -35,6 +35,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Mo
                 sw.WriteLine("______________________________");
             }
         }
+
         public int procuraCodigoPesFisica(ref string nomeLido, string pessoa, string codigo)
         {
             string pessoaLida, codigoLido;
@@ -81,6 +82,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Mo
             }
             return flagcodigocadastrado;
         }
+
         public int pesquisaPesFis(string nome, string pessoa, string codigo)
         {
             int flagPessoaEncontrada = 1;
@@ -153,6 +155,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Mo
 
             return flagPessoaEncontrada;
         }
+
         public void apagarArqTemp()
         {
             File.Delete(strPathFileTemp);

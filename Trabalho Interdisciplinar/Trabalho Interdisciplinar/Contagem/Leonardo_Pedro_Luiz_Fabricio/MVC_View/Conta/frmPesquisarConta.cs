@@ -107,17 +107,23 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             txtMskCPF.Clear();
             listViewResultadoConta.Items.Clear();
         }
-        private void pesquisar()
+        public void verificaTudo(ref string pessoa, ref string codigo, ref int flagCodigo)
         {
-            string pessoa = null;
+            pessoa = null;
             pessoa = verfPessoa();
 
-            string codigo = null;
-            int flagCodigo = 1;
+            codigo = null;
+            flagCodigo = 1;
             flagCodigo = verfCod(ref codigo);
             //flagcodigo=0-->O codigo foi digitado e a variavel codigo está com ele
             //flagcodigo=1-->O cpf não foi digitado
             //flagcodigo=2-->O cnpj não foi digitado
+        }
+        private void pesquisar()
+        {
+            string pessoa = null,codigo = null;
+            int flagCodigo = 1;
+            verificaTudo(ref pessoa, ref codigo, ref flagCodigo);
 
 
             int erro = mensagemErro(flagCodigo);
@@ -131,16 +137,9 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         }
         private void pesquisarArq(int arq)
         {
-            string pessoa = null;
-            pessoa = verfPessoa();
-
-            string codigo = null;
+            string pessoa = null, codigo = null;
             int flagCodigo = 1;
-            flagCodigo = verfCod(ref codigo);
-            //flagcodigo=0-->O codigo foi digitado e a variavel codigo está com ele
-            //flagcodigo=1-->O cpf não foi digitado
-            //flagcodigo=2-->O cnpj não foi digitado
-
+            verificaTudo(ref pessoa, ref codigo, ref flagCodigo);
 
             int flagCodigoEncontrado = 1;
             if (flagCodigo == 0)//só pesquisa se o usuario digitar um cpf ou cnpj
@@ -192,7 +191,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
             return flagcodigo;
         }
-        //<model>
+        //<lê da memoria>
         private int pesquisaContaTxt(string pessoa, string codigo)
         {
             ContaDAO cntDAO = new ContaDAO();
@@ -274,7 +273,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
             return flagCodigoEncontrado;
         }
-        //</model>
+        //</lê da memoria>
         private int mensagemErro(int flagcodigo)
         {
             int erro = 0;

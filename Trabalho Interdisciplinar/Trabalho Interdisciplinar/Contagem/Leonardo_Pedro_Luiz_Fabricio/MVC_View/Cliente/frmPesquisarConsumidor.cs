@@ -89,7 +89,6 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             if (checkBox1.Checked)
                 checkBox2.Checked = false;
         }
-
         private void checkBox2_Click(object sender, EventArgs e)
         {
             checkBox2.Checked = true;
@@ -134,22 +133,27 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
 
 
         //------------------métodos
-        public void pesquisar()
+        public void verificaTudo(ref string Nome, ref string Pessoa, ref string codigo, ref double flagCodigo)
         {
-            string Nome = null;
             flagNome = verfNome(ref Nome);
             //flagNome=0-->O nome foi digitado e se encontra na variavel Nome
             //flagNome=1-->O nome não foi digitado
             //flagNome=2-->O nome contem caracteres que não são letras
 
-            string Pessoa = verfPessoa();
+            Pessoa = verfPessoa();
             //Pessoa--->Atribui a Pessoa a string Pessoa Jurídica ou Pessoa Física
 
-            string codigo = null;
-            double flagCodigo = verfCod(ref codigo);
+            codigo = null;
+            flagCodigo = verfCod(ref codigo);
             //flagcodigo=0-->O codigo foi digitado e ele se encontra na variavel codigo
             //flagcodigo=1-->O cpf não foi digitado
             //flagcodigo=2-->O cnpj não foi digitado
+        }
+        public void pesquisar()
+        {
+            string Nome = "a", Pessoa = "b", codigo = "c";
+            double flagCodigo=2;
+            verificaTudo(ref Nome, ref Pessoa, ref codigo, ref flagCodigo);
 
             int erro = mensagemErro(flagNome, flagCodigo);
             //imprime uma mensagem se houver algum erro que somente ocorrera se alguma flag não conter 0
@@ -162,20 +166,9 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
         }
         public void pesquisarArq(int arq)
         {
-            string Nome = null;
-            flagNome = verfNome(ref Nome);
-            //flagNome=0-->O nome foi digitado e se encontra na variavel Nome
-            //flagNome=1-->O nome não foi digitado
-            //flagNome=2-->O nome contem caracteres que não são letras
-
-            string Pessoa = verfPessoa();
-            //Pessoa--->Atribui a Pessoa a string Pessoa Jurídica ou Pessoa Física
-
-            string codigo = null;
-            double flagCodigo = verfCod(ref codigo);
-            //flagcodigo=0-->O codigo foi digitado e ele se encontra na variavel codigo
-            //flagcodigo=1-->O cpf não foi digitado
-            //flagcodigo=2-->O cnpj não foi digitado
+            string Nome = "a", Pessoa = "b", codigo = "c";
+            double flagCodigo = 2;
+            verificaTudo(ref Nome, ref Pessoa, ref codigo, ref flagCodigo);
 
             int flagPessoaEncontrada = 1;
             if (flagNome == 0 && flagCodigo == 0)//Se o usuario digitou o nome e o codigo então irá busca-lo
@@ -361,6 +354,7 @@ namespace Trabalho_Interdisciplinar.Contagem.Leonardo_Pedro_Luiz_Fabricio.MVC_Vi
             }
             return flagPessoaEncontrada;
         }
+        //</Procura na memoria>
         private int mensagemErro(int flagNome, double flagCodigo)
         {
             int erro = 0;

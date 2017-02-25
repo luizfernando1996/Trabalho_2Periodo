@@ -54,4 +54,10 @@
     <leituraAnterior_MtdConta>10</leituraAnterior_MtdConta>
     <tarifa_MtdContaComercialXml>R$: 89,38</tarifa_MtdContaComercialXml>
   </Conta_Comercial>
+  <Conta_Comercial>
+    <cnpjJurid_MtdContaC>CNPJ: 98,888,888/8888-88</cnpjJurid_MtdContaC>
+    <leituraAtual_MtdConta>150</leituraAtual_MtdConta>
+    <leituraAnterior_MtdConta>10</leituraAnterior_MtdConta>
+    <tarifa_MtdContaComercialXml>R$: 68,74</tarifa_MtdContaComercialXml>
+  </Conta_Comercial>
 </ArrayOfConta_Comercial>

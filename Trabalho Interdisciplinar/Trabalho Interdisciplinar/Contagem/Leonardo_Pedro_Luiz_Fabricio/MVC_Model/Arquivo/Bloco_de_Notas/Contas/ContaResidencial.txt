@@ -3,8 +3,18 @@ Leitura Atual: 123
 Leitura Anterior: 1
 R$: 75,46
 ______________________________
-	CPF: 111,111,111-11
+CPF: 111,111,111-11
 Leitura Atual: 15
 Leitura Anterior: 10
 R$: 14,62
+______________________________
+CPF: 899,999,999-99
+Leitura Atual: 150
+Leitura Anterior: 10
+R$: 84,82
+______________________________
+CPF: 222,222,222-22
+Leitura Atual: 150
+Leitura Anterior: 2
+R$: 88,98
 ______________________________
